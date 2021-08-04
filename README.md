@@ -4,7 +4,7 @@
 You can install this package with npm:
 
 ```shell
-  $> npm install @lnmarkets/api-connector
+  $> npm install @lnmarkets/api
 ```
 
 Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs. You'll need to copy this token as it is needed to authenticate yourself and make requests to the API.
@@ -14,7 +14,7 @@ Then go to on your LN Markets account under the API section of the Profile to ge
 All you have to do now is to instanciate a `LNMarkets` object this way:
 
 ```JS
-  const LNMarkets = require('@lnmarkets/api-connector')
+  const LNMarkets = require('@lnmarkets/api')
   const API = new LNMarkets({ token: <YOUR-TOKEN> })
 ```
 
