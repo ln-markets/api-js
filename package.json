@@ -1,6 +1,6 @@
 {
   "name": "@lnmarkets/api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A set of wrappers to easily communicate with LN Markets API!",
   "main": "ln-markets.js",
   "scripts": {
