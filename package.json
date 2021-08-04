@@ -1,0 +1,22 @@
+{
+  "name": "@lnmarkets/api",
+  "version": "1.0.0",
+  "description": "A set of wrappers to easily communicate with LN Markets API!",
+  "main": "ln-markets.js",
+  "scripts": {
+    "test": "echo \"No tests.\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnmarkets/api-connectors.git"
+  },
+  "keywords": [
+    "lnmarkets"
+  ],
+  "author": "BOTREL KIlian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lnmarkets/api-connectors/issues"
+  },
+  "homepage": "https://github.com/lnmarkets/api-connectors/node/#readme"
+}
