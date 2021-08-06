@@ -1,6 +1,7 @@
 # Node Connector
 
 ## Install
+
 You can install this package with npm:
 
 ```shell
@@ -16,6 +17,7 @@ All you have to do now is to instanciate a `LNMarkets` object this way:
 ```JS
   const LNMarkets = require('@lnmarkets/api')
   const API = new LNMarkets({ token: <YOUR-TOKEN> })
+  const { body: info } = await API.nodeState()
 ```
 
 After this, you'll be able to use all the documented `API` methods below.
@@ -25,19 +27,19 @@ After this, you'll be able to use all the documented `API` methods below.
 This connector require an object as parameter. Here is the list of its possible properties.
 
 ```yaml
-  token:
-    type: String
-    required: true
+token:
+  type: String
+  required: true
 
-  network:
-    type: String
-    required: false
-    default: 'mainnet'
+network:
+  type: String
+  required: false
+  default: 'mainnet'
 
-  version:
-    type: String
-    required: false
-    default: 'v1'
+version:
+  type: String
+  required: false
+  default: 'v1'
 ```
 
 ## Route Methods
@@ -46,46 +48,47 @@ All these functions are wrappers for documented public endpoints from LN Markets
 
 Be careful, all methods expect an object as parameter with the correct parameters in it.
 
-* [`addMarginPosition`](#addMarginPosition)
-* [`apiState`](#apiState)
-* [`cancelAllPositions`](#cancelAllPositions)
-* [`cancelPosition`](#cancelPosition)
-* [`cashinPosition`](#cashinPosition)
-* [`closeAllPosisitions`](#closeAllPosisitions)
-* [`closePosition`](#closePosition)
-* [`deposit`](#deposit)
-* [`depositHistory`](#depositHistory)
-* [`futuresDataHistory`](#futuresDataHistory)
-* [`getAnnouncements`](#getAnnouncements)
-* [`getLeaderboard`](#getLeaderboard)
-* [`getPositions`](#getPositions)
-* [`getUser`](#getUser)
-* [`newPosition`](#newPosition)
-* [`nodeState`](#nodeState)
-* [`updatePosition`](#updatePosition)
-* [`updateUser`](#updateUser)
-* [`withdraw`](#withdraw)
-* [`withdrawHistory`](#withdrawHistory)
-* [`withdrawLNURL`](#withdrawLNURL)
+- [`addMarginPosition`](#addMarginPosition)
+- [`apiState`](#apiState)
+- [`cancelAllPositions`](#cancelAllPositions)
+- [`cancelPosition`](#cancelPosition)
+- [`cashinPosition`](#cashinPosition)
+- [`closeAllPosisitions`](#closeAllPosisitions)
+- [`closePosition`](#closePosition)
+- [`deposit`](#deposit)
+- [`depositHistory`](#depositHistory)
+- [`futuresDataHistory`](#futuresDataHistory)
+- [`getAnnouncements`](#getAnnouncements)
+- [`getLeaderboard`](#getLeaderboard)
+- [`getPositions`](#getPositions)
+- [`getUser`](#getUser)
+- [`newPosition`](#newPosition)
+- [`nodeState`](#nodeState)
+- [`updatePosition`](#updatePosition)
+- [`updateUser`](#updateUser)
+- [`withdraw`](#withdraw)
+- [`withdrawHistory`](#withdrawHistory)
+- [`withdrawLNURL`](#withdrawLNURL)
 
 ## Generic Methods
 
 These methods are designed to fill the gaps if the API evolves and the future but this package isn't up to date.
 
-* [`requestAPI`](#requestAPI)
+- [`requestAPI`](#requestAPI)
 
 ## Documentation
+
 ### addMargin
 
 Add more margin to an existing position.
 
 ```yaml
-  amount:
-    type: Integer
-    required: true
-  pid:
-    type: String
-    required: true
+amount:
+  type: Integer
+  required: true
+pid:
+  type: String
+  required: true
 ```
 
 Example:
@@ -104,7 +107,7 @@ Example:
 Retrieve informations related to LN Markets API.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -120,7 +123,7 @@ Example:
 Cancel all oponed (not running) positions for this user.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -131,15 +134,14 @@ Example:
 
 [`DELETE /futures/all/cancel`](https://docs.lnmarkets.com/api/v1/#cancel-all) documentation for more details.
 
-
 ### cancelPosition
 
 Cancel a particular position for this user.
 
 ```yaml
-  pid:
-    type: String
-    required: true
+pid:
+  type: String
+  required: true
 ```
 
 Example:
@@ -157,12 +159,12 @@ Example:
 Retrieve a part of the general PL of a running position.
 
 ```yaml
-  amount:
-    type: Integer
-    required: true
-  pid:
-    type: String
-    required: true
+amount:
+  type: Integer
+  required: true
+pid:
+  type: String
+  required: true
 ```
 
 Example:
@@ -181,7 +183,7 @@ Example:
 Close all running position for this user.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -197,9 +199,9 @@ Example:
 Close a particular running position for this user.
 
 ```yaml
-  pid:
-    type: String
-    required: true
+pid:
+  type: String
+  required: true
 ```
 
 Example:
@@ -217,13 +219,13 @@ Example:
 Add funds to your LN Markets balance.
 
 ```yaml
-  amount:
-    type: Integer
-    required: true
-  unit:
-    type: String
-    required: false
-    default: 'sat'
+amount:
+  type: Integer
+  required: true
+unit:
+  type: String
+  required: false
+  default: 'sat'
 ```
 
 Example:
@@ -241,24 +243,24 @@ Example:
 Retrieve deposit history for this user.
 
 ```yaml
-  nbItem:
-    type: Integer
-    required: false
-    default: 50
-  index:
-    type: Integer
-    required: false
-    default: 0
-  getLength:
-    type: Boolean
-    required: false
-    default: false
-  start:
-    type: Integer
-    required: false
-  end:
-    type: Integer
-    required: false
+nbItem:
+  type: Integer
+  required: false
+  default: 50
+index:
+  type: Integer
+  required: false
+  default: 0
+getLength:
+  type: Boolean
+  required: false
+  default: false
+start:
+  type: Integer
+  required: false
+end:
+  type: Integer
+  required: false
 ```
 
 Example:
@@ -276,20 +278,20 @@ Example:
 Retrieve the past bid, offer and index data recorded.
 
 ```yaml
-  table:
-    type: String
-    required: true
-    enum: ['bid_offer', 'index']
-  from:
-    type: Integer
-    required: false
-  to:
-    type: Integer
-    required: false
-  limit:
-    type: Integer
-    required: false
-    default: 1000
+table:
+  type: String
+  required: true
+  enum: ['bid_offer', 'index']
+from:
+  type: Integer
+  required: false
+to:
+  type: Integer
+  required: false
+limit:
+  type: Integer
+  required: false
+  default: 1000
 ```
 
 Example:
@@ -308,7 +310,7 @@ Example:
 Retrieve announcements made by LN Markets.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -324,7 +326,7 @@ Example:
 Queries the 10 users with the biggest positive PL.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -340,11 +342,11 @@ Example:
 Retrieve all or a part of user positions.
 
 ```yaml
-  type:
-    type: String
-    required: false
-    enum: ['all', 'open', 'running', 'closed']
-    default: 'all'
+type:
+  type: String
+  required: false
+  enum: ['all', 'open', 'running', 'closed']
+  default: 'all'
 ```
 
 Example:
@@ -362,7 +364,7 @@ Example:
 Retrieve user informations.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -378,39 +380,39 @@ Example:
 Open a new position on the market.
 
 ```yaml
-  type:
-    type: String
-    required: true
-    enum: ['l', 'm']
-  
-  side:
-    type: String
-    required: true
-    enum: ['b', 's']
-  
-  margin:
-    type: Integer
-    required: false
-  
-  leverage:
-    type: Float
-    required: true
+type:
+  type: String
+  required: true
+  enum: ['l', 'm']
 
-  quantity:
-    type: Integer
-    required: false
-  
-  takeprofit:
-    type: Integer
-    required: false
-  
-  stoploss:
-    type: Integer
-    required: false
-  
-  price:
-    type: Float
-    required: false
+side:
+  type: String
+  required: true
+  enum: ['b', 's']
+
+margin:
+  type: Integer
+  required: false
+
+leverage:
+  type: Float
+  required: true
+
+quantity:
+  type: Integer
+  required: false
+
+takeprofit:
+  type: Integer
+  required: false
+
+stoploss:
+  type: Integer
+  required: false
+
+price:
+  type: Float
+  required: false
 ```
 
 Example:
@@ -431,7 +433,7 @@ Example:
 Show informations about LN Markets lightning node.
 
 ```yaml
-  # No parameters
+# No parameters
 ```
 
 Example:
@@ -447,18 +449,18 @@ Example:
 Modify stoploss or takeprofit parameter of an existing position.
 
 ```yaml
-  pid:
-    type: String
-    required: true
+pid:
+  type: String
+  required: true
 
-  type:
-    type: String
-    required: true
-    enum: ['takeprofit', 'stoploss']
+type:
+  type: String
+  required: true
+  enum: ['takeprofit', 'stoploss']
 
-  value:
-    type: Float
-    required: true
+value:
+  type: Float
+  required: true
 ```
 
 Example:
@@ -478,25 +480,25 @@ Example:
 Modify user account parameters.
 
 ```yaml
-  show_leaderboard:
-    type: Boolean
-    required: false
+show_leaderboard:
+  type: Boolean
+  required: false
 
-  show_username:
-    type: Boolean
-    required: false
+show_username:
+  type: Boolean
+  required: false
 
-  username:
-    type: String
-    required: false
-  
-  email:
-    type: String
-    required: false
-  
-  resend_email:
-    type: Boolean
-    required: false
+username:
+  type: String
+  required: false
+
+email:
+  type: String
+  required: false
+
+resend_email:
+  type: Boolean
+  required: false
 ```
 
 Example:
@@ -511,25 +513,23 @@ Example:
 
 [`PUT /user`](https://docs.lnmarkets.com/api/v1/#update-user) documentation for more details.
 
-
-
 ### withdraw
 
 Move funds from LN Markets to your wallet via BOLT11 invoice.
 
 ```yaml
-  amount:
-    type: Integer
-    required: true
+amount:
+  type: Integer
+  required: true
 
-  unit:
-    type: String
-    required: false
-    default: 'sat'
+unit:
+  type: String
+  required: false
+  default: 'sat'
 
-  invoice:
-    type: String
-    required: true
+invoice:
+  type: String
+  required: true
 ```
 
 Example:
@@ -548,24 +548,24 @@ Example:
 Retrieve user withdraw history.
 
 ```yaml
-  nbItem:
-    type: Integer
-    required: false
-    default: 50
-  index:
-    type: Integer
-    required: false
-    default: 0
-  getLength:
-    type: Boolean
-    required: false
-    default: false
-  start:
-    type: Integer
-    required: false
-  end:
-    type: Integer
-    required: false
+nbItem:
+  type: Integer
+  required: false
+  default: 50
+index:
+  type: Integer
+  required: false
+  default: 0
+getLength:
+  type: Boolean
+  required: false
+  default: false
+start:
+  type: Integer
+  required: false
+end:
+  type: Integer
+  required: false
 ```
 
 Example:
@@ -578,19 +578,18 @@ Example:
 
 [`GET /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw) documentation for more details.
 
-
 ### withdrawLNURL
 
 Create a LNURL to withdraw from user account.
 
 ```yaml
-  amount:
-    type: Integer
-    required: true
-  unit:
-    type: String
-    required: false
-    default: 'sat'
+amount:
+  type: Integer
+  required: true
+unit:
+  type: String
+  required: false
+  default: 'sat'
 ```
 
 Example:
@@ -609,23 +608,23 @@ Use LNURL to withdraw directly from the user balance to the wallet
 This method is used in case where no wrapper is (yet) available for a particular endpoint.
 
 ```yaml
-  method:
-    type: String
-    required: true
-    enum: ['GET', 'PUT', 'POST', 'DELETE']
-  
-  endpoint:
-    type: String
-    required: true
-  
-  params:
-    type: Object
-    required: false
-  
-  credentials:
-    type: Boolean
-    required: false
-    default: false
+method:
+  type: String
+  required: true
+  enum: ['GET', 'PUT', 'POST', 'DELETE']
+
+endpoint:
+  type: String
+  required: true
+
+params:
+  type: Object
+  required: false
+
+credentials:
+  type: Boolean
+  required: false
+  default: false
 ```
 
 `endpoint` is which route you want to communicate with, `credentials` is your generated token.
