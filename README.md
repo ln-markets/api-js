@@ -1,4 +1,8 @@
-# Node Connector
+# LN Markets JS API
+
+`@lnmarkets/api` is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
+
+**Note**: This module does not work in the browser.
 
 ## Install
 
