@@ -2,15 +2,20 @@ const https = require('https')
 const querystring = require('querystring')
 
 module.exports = class LNMarkets {
-  constructor({ token, network, version }) {
+  constructor(opt = {}) {
+    const { token, network, version } = opt
+
     this.token = token
     this.network = network || 'mainnet'
     this.version = version || 'v1'
     this.hostname =
-      network === 'mainnet' ? 'api.lnmarkets.com' : 'api.testnet.lnmarkets.com'
+      this.network === 'mainnet'
+        ? 'api.lnmarkets.com'
+        : 'api.testnet.lnmarkets.com'
   }
 
-  requestAPI({ method, endpoint, params, credentials }) {
+  requestAPI(opt = {}) {
+    const { method, endpoint, params, credentials } = opt
     const { hostname, version, token } = this
     const options = {
       port: 443,
@@ -32,10 +37,10 @@ module.exports = class LNMarkets {
 
     return new Promise((resolve, reject) => {
       const call = https.request(options, (response) => {
-        let body = ''
+        let data = ''
 
         response.on('data', (chunk) => {
-          body += chunk
+          data += chunk
         })
 
         response.on('error', (error) => {
@@ -43,12 +48,17 @@ module.exports = class LNMarkets {
         })
 
         response.on('end', () => {
-          const data = JSON.parse(body)
+          try {
+            const body = JSON.parse(data)
 
-          if (response.statusCode === 200) {
-            resolve({ body: data, statusCode: response.statusCode })
-          } else {
-            resolve({ body: data, statusCode: response.statusCode })
+            if (response.statusCode === 200) {
+              resolve({ body, statusCode: response.statusCode })
+            } else {
+              reject({ body, statusCode: response.statusCode })
+            }
+          } catch (error) {
+            error.data = data
+            reject(error)
           }
         })
       })
