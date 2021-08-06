@@ -1,9 +1,11 @@
 {
   "name": "@lnmarkets/api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A set of wrappers to easily communicate with LN Markets API !",
   "main": "index.js",
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "author": "BOTREL KIlian",
   "license": "MIT",
   "bugs": {
