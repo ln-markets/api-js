@@ -2,29 +2,52 @@
 
 ## Install
 
-You can install this package with npm:
+You can install this package with npm or yarn:
 
 ```shell
   $> npm install @lnmarkets/api
 ```
 
-Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs. You'll need to copy this token as it is needed to authenticate yourself and make requests to the API.
+```shell
+  $> yarn add @lnmarkets/api
+```
+
+Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs. You'll need to copy this token as it is needed to authenticate yourself and make requests to the lnm.
 
 ![Generate Token](https://i.postimg.cc/cJWXkCrj/Untitled.png)
 
-All you have to do now is to instanciate a `LNMarkets` object this way:
+## Websocket API
+
+Websockt API is limited now for bid offer and index update, we will make a dedicated Websocket api soon !
+
+The message format is using [JSON-RPC](https://www.jsonrpc.org/specification) spec.
 
 ```JS
-  const LNMarkets = require('@lnmarkets/api')
-  const API = new LNMarkets({ token: <YOUR-TOKEN> })
-  const { body: info } = await API.nodeState()
+  const { LNMarketsWebsocket } = require('@lnmarkets/api')
+  const lnm = new LNMarketsWebsocket()
+  lnm.on('message', console.log)
+  await lnm.connect()
+```
+
+## HTTP API
+
+All you have to do now is to instanciate a `LNMarketsHttp` object this way:
+
+```JS
+  const { LNMarketsHttp } = require('@lnmarkets/api')
+  const lmm = new LNMarketsHttp({ token: '<YOUR-TOKEN>' })
+  const info = await lnm.nodeState()
 ```
 
 After this, you'll be able to use all the documented `API` methods below.
 
-## Options
+All these functions are wrappers for documented public endpoints from LN Markets API v1. See specification [here](https://docs.lnmarkets.com/api/v1/).
 
-This connector require an object as parameter. Here is the list of its possible properties.
+Be careful, all methods expect an object as parameter with the correct parameters in it.
+
+### Options
+
+This HTTP api require an object as parameter. Here is the list of its possible properties.
 
 ```yaml
 token:
@@ -42,11 +65,13 @@ version:
   default: 'v1'
 ```
 
-## Route Methods
+### Generic Methods
 
-All these functions are wrappers for documented public endpoints from LN Markets API v1. See specification [here](https://docs.lnmarkets.com/api/v1/).
+These methods are designed to fill the gaps if the API evolves and the future but this package isn't up to date.
 
-Be careful, all methods expect an object as parameter with the correct parameters in it.
+- [`requestAPI`](#requestAPI)
+
+### Methods
 
 - [`futuresNewPosition`](#futuresNewPosition)
 - [`futuresGetPositions`](#futuresGetPositions)
@@ -70,15 +95,7 @@ Be careful, all methods expect an object as parameter with the correct parameter
 - [`withdrawHistory`](#withdrawHistory)
 - [`withdrawLNURL`](#withdrawLNURL)
 
-## Generic Methods
-
-These methods are designed to fill the gaps if the API evolves and the future but this package isn't up to date.
-
-- [`requestAPI`](#requestAPI)
-
-## Documentation
-
-### futuresNewPosition
+#### futuresNewPosition
 
 Open a new position on the market.
 
@@ -121,7 +138,7 @@ price:
 Example:
 
 ```JS
-  await API.futuresNewPosition({
+  await lnm.futuresNewPosition({
     type: 'm',
     side: 's',
     margin: 10000,
@@ -131,7 +148,7 @@ Example:
 
 [`POST /futures`](https://docs.lnmarkets.com/api/v1/#create) documentation for more details.
 
-### futuresGetPositions
+#### futuresGetPositions
 
 Retrieve all or a part of user positions.
 
@@ -146,12 +163,12 @@ type:
 Example:
 
 ```JS
-  await API.futuresGetPositions({
+  await lnm.futuresGetPositions({
     type: 'running'
   })
 ```
 
-### futuresUpdatePosition
+#### futuresUpdatePosition
 
 Modify stoploss or takeprofit parameter of an existing position.
 
@@ -173,7 +190,7 @@ value:
 Example:
 
 ```JS
-  await API.futuresUpdatePosition({
+  await lnm.futuresUpdatePosition({
     pid: 'b87eef8a-52ab-2fea-1adc-c41fba870b0f',
     type: 'stoploss',
     value: 13290.5
@@ -182,7 +199,7 @@ Example:
 
 [`PUT /futures`](https://docs.lnmarkets.com/api/v1/#update) documentation for more details.
 
-### addMargin
+#### addMargin
 
 Add more margin to an existing position.
 
@@ -198,7 +215,7 @@ pid:
 Example:
 
 ```JS
-  await API.addMargin({
+  await lnm.addMargin({
     amount: 20000,
     pid: '249dc818-f8a5-4713-a3a3-8fe85f2e8969'
   })
@@ -206,7 +223,7 @@ Example:
 
 [`POST /futures/add-margin`](https://docs.lnmarkets.com/api/v1/#add-margin) documentation for more details.
 
-### futuresCancelAllPositions
+#### futuresCancelAllPositions
 
 Cancel all oponed (not running) positions for this user.
 
@@ -217,12 +234,12 @@ Cancel all oponed (not running) positions for this user.
 Example:
 
 ```JS
-  await API.futuresCancelAllPositions()
+  await lnm.futuresCancelAllPositions()
 ```
 
 [`DELETE /futures/all/cancel`](https://docs.lnmarkets.com/api/v1/#cancel-all) documentation for more details.
 
-### futuresCancelPosition
+#### futuresCancelPosition
 
 Cancel a particular position for this user.
 
@@ -235,14 +252,14 @@ pid:
 Example:
 
 ```JS
-  await API.futuresCancelPosition({
+  await lnm.futuresCancelPosition({
     pid: 'b87eef8a-52ab-2fea-1adc-c41fba870b0f'
   })
 ```
 
 [`POST /futures/cancel`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### futuresCashinPosition
+#### futuresCashinPosition
 
 Retrieve a part of the general PL of a running position.
 
@@ -258,7 +275,7 @@ pid:
 Example:
 
 ```JS
-  await API.futuresCashinPosition({
+  await lnm.futuresCashinPosition({
     amount: 1000,
     pid: "99c470e1-2e03-4486-a37f-1255e08178b1"
   })
@@ -266,7 +283,7 @@ Example:
 
 [`POST /futures/cash-in`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### futuresCloseAllPosisitions
+#### futuresCloseAllPosisitions
 
 Close all running position for this user.
 
@@ -277,12 +294,12 @@ Close all running position for this user.
 Example:
 
 ```JS
-  await API.futuresCloseAllPosisitions()
+  await lnm.futuresCloseAllPosisitions()
 ```
 
 [`DELETE /futures/all/close`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### futuresClosePosition
+#### futuresClosePosition
 
 Close a particular running position for this user.
 
@@ -295,14 +312,14 @@ pid:
 Example:
 
 ```JS
-  await API.futuresClosePosition({
+  await lnm.futuresClosePosition({
     pid: 'a2ca6172-1078-463d-ae3f-8733f36a9b0e'
   })
 ```
 
 [`DELETE /futures`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### deposit
+#### deposit
 
 Add funds to your LN Markets balance.
 
@@ -319,14 +336,14 @@ unit:
 Example:
 
 ```JS
-  await API.deposit({
+  await lnm.deposit({
     amount: 25000
   })
 ```
 
 [`POST /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
 
-### depositHistory
+#### depositHistory
 
 Retrieve deposit history for this user.
 
@@ -354,14 +371,14 @@ end:
 Example:
 
 ```JS
-  await API.depositHistory({
+  await lnm.depositHistory({
     nbItem: 30
   })
 ```
 
 [`GET /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
 
-### futuresHistory
+#### futuresHistory
 
 Retrieve the past bid, offer and index data recorded.
 
@@ -385,7 +402,7 @@ limit:
 Example:
 
 ```JS
-  await API.futuresHistory({
+  await lnm.futuresHistory({
     table: 'index',
     limit: 250
   })
@@ -393,7 +410,7 @@ Example:
 
 [`GET /futures/history`](https://docs.lnmarkets.com/api/v1/#futures-data-history) documentation for more details.
 
-### getAnnouncements
+#### getAnnouncements
 
 Retrieve announcements made by LN Markets.
 
@@ -404,12 +421,12 @@ Retrieve announcements made by LN Markets.
 Example:
 
 ```JS
-  await API.getAnnouncements()
+  await lnm.getAnnouncements()
 ```
 
 [`GET /state/announcemenets`](https://docs.lnmarkets.com/api/v1/#get-the-ln-markets-announcements) documentation for more details.
 
-### getLeaderboard
+#### getLeaderboard
 
 Queries the 10 users with the biggest positive PL.
 
@@ -420,14 +437,14 @@ Queries the 10 users with the biggest positive PL.
 Example:
 
 ```JS
-  await API.getLeaderboard()
+  await lnm.getLeaderboard()
 ```
 
 [`GET /state/leaderboard`](https://docs.lnmarkets.com/api/v1/#api-leaderboard) documentation for more details.
 
 [`GET /futures`](https://docs.lnmarkets.com/api/v1/#history) documentation for more details.
 
-### getUser
+#### getUser
 
 Retrieve user informations.
 
@@ -438,14 +455,14 @@ Retrieve user informations.
 Example:
 
 ```JS
-  await API.getUser()
+  await lnm.getUser()
 ```
 
 [`GET /user`](https://docs.lnmarkets.com/api/v1/#informations) documentation for more details.
 
-### apiState
+#### apiState
 
-Retrieve informations related to LN Markets API.
+Retrieve informations related to LN Markets lnm.
 
 ```yaml
 # No parameters
@@ -454,12 +471,12 @@ Retrieve informations related to LN Markets API.
 Example:
 
 ```JS
-  await API.apiState()
+  await lnm.apiState()
 ```
 
 [`GET /state`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
 
-### nodeState
+#### nodeState
 
 Show informations about LN Markets lightning node.
 
@@ -470,12 +487,12 @@ Show informations about LN Markets lightning node.
 Example:
 
 ```JS
-  await API.nodeState()
+  await lnm.nodeState()
 ```
 
 [`GET /state/node`](https://docs.lnmarkets.com/api/v1/#node-informations) documentation for more details.
 
-### updateUser
+#### updateUser
 
 Modify user account parameters.
 
@@ -504,7 +521,7 @@ resend_email:
 Example:
 
 ```JS
-  await API.updateUser({
+  await lnm.updateUser({
     show_username: true,
     show_leaderboard: true,
     username: 'API-Connector',
@@ -513,7 +530,7 @@ Example:
 
 [`PUT /user`](https://docs.lnmarkets.com/api/v1/#update-user) documentation for more details.
 
-### withdraw
+#### withdraw
 
 Move funds from LN Markets to your wallet via BOLT11 invoice.
 
@@ -535,7 +552,7 @@ invoice:
 Example:
 
 ```JS
-  await API.withdraw({
+  await lnm.withdraw({
     amount: 1000,
     invoice: 'lntb100u1p0jr0ykpp5ldx3un8ym6z0uwjxd083mp2rcr04d2dv0fkx729ajs62pq9pfjqqdql23jhxapdwa5hg6rywfshwttjda6hgegcqzpgxq92fjuqsp5m6q0fzynu2qr624mzjc285duurhccmkfg94mcdctc0p9s7qkrq8q9qy9qsqp862cjznpey5r76e7amhlpmhwn2c7xvke59srhv0xf75m4ksjm4hzn8y9xy0zs5ec6gxmsr8gj4q23w8ped32llscjcneyjz2afeapqpu4gamz'
   })
@@ -543,7 +560,7 @@ Example:
 
 [`POST /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw-via-invoice) documentation for more details.
 
-### withdrawHistory
+#### withdrawHistory
 
 Retrieve user withdraw history.
 
@@ -571,14 +588,14 @@ end:
 Example:
 
 ```JS
-  await API.withdrawHistory({
+  await lnm.withdrawHistory({
     nbItem: 25
   })
 ```
 
 [`GET /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw) documentation for more details.
 
-### withdrawLNURL
+#### withdrawLNURL
 
 Create a LNURL to withdraw from user account.
 
@@ -595,7 +612,7 @@ unit:
 Example:
 
 ```JS
-  await API.withdrawLNURL({
+  await lnm.withdrawLNURL({
     amount: 40000,
   })
 ```
@@ -603,7 +620,7 @@ Example:
 [`POST /lnurl/withdraw`](https://docs.lnmarkets.com/api/v1/#create-a-lnurl-withdraw) documentation for more details.
 Use LNURL to withdraw directly from the user balance to the wallet
 
-### requestAPI
+#### requestAPI
 
 This method is used in case where no wrapper is (yet) available for a particular endpoint.
 
@@ -632,9 +649,13 @@ credentials:
 Example:
 
 ```JS
-  await API.requestAPI({
+  await lnm.requestAPI({
     method: 'GET',
     endpoint: '/user',
     credentials: true
   })
 ```
+
+## Examples
+
+You can find some code examples in the `examples`folder !
