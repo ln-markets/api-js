@@ -6,7 +6,8 @@ module.exports = class LNMarkets {
     this.token = token
     this.network = network || 'mainnet'
     this.version = version || 'v1'
-    this.hostname = network === 'mainnet' ? 'api.lnmarkets.com' : 'api.testnet.lnmarkets.com'
+    this.hostname =
+      network === 'mainnet' ? 'api.lnmarkets.com' : 'api.testnet.lnmarkets.com'
   }
 
   requestAPI({ method, endpoint, params, credentials }) {
@@ -17,8 +18,8 @@ module.exports = class LNMarkets {
       method,
       path: `/${version}${endpoint}`,
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     }
 
     if (credentials) {
@@ -27,20 +28,20 @@ module.exports = class LNMarkets {
 
     if (method.match(/^(GET|DELETE)$/) && params) {
       options.path += `?${querystring.stringify(params)}`
-    } 
+    }
 
     return new Promise((resolve, reject) => {
       const call = https.request(options, (response) => {
         let body = ''
-  
+
         response.on('data', (chunk) => {
           body += chunk
         })
-  
+
         response.on('error', (error) => {
           reject(error)
         })
-  
+
         response.on('end', () => {
           const data = JSON.parse(body)
 
@@ -65,7 +66,7 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/futures',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -76,7 +77,7 @@ module.exports = class LNMarkets {
       method: 'PUT',
       endpoint: '/futures',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -87,7 +88,7 @@ module.exports = class LNMarkets {
       method: 'DELETE',
       endpoint: '/futures',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -97,7 +98,7 @@ module.exports = class LNMarkets {
     const options = {
       method: 'DELETE',
       endpoint: '/futures/all/close',
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -108,7 +109,7 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/futures/cancel',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -118,7 +119,7 @@ module.exports = class LNMarkets {
     const options = {
       method: 'DELETE',
       endpoint: '/futures/all/cancel',
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -129,10 +130,10 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/futures/cash-in',
       params,
-      credentials: true
+      credentials: true,
     }
 
-    return this.requestAPI(options) 
+    return this.requestAPI(options)
   }
 
   addMarginPosition(params) {
@@ -140,10 +141,10 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/futures/add-margin',
       params,
-      credentials: true
+      credentials: true,
     }
 
-    return this.requestAPI(options) 
+    return this.requestAPI(options)
   }
 
   getPositions(params) {
@@ -151,10 +152,10 @@ module.exports = class LNMarkets {
       method: 'GET',
       endpoint: '/futures',
       params,
-      credentials: true
+      credentials: true,
     }
 
-    return this.requestAPI(options) 
+    return this.requestAPI(options)
   }
 
   futuresDataHistory(params) {
@@ -171,7 +172,7 @@ module.exports = class LNMarkets {
     const options = {
       method: 'GET',
       endpoint: '/user',
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -182,7 +183,7 @@ module.exports = class LNMarkets {
       method: 'PUT',
       endpoint: '/user',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -193,7 +194,7 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/user/deposit',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -204,7 +205,7 @@ module.exports = class LNMarkets {
       method: 'GET',
       endpoint: '/user/deposit',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -215,7 +216,7 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/user/withdraw',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
@@ -226,18 +227,18 @@ module.exports = class LNMarkets {
       method: 'POST',
       endpoint: '/lnurl/withdraw',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)
-  } 
+  }
 
   withdrawHistory(params) {
     const options = {
       method: 'GET',
       endpoint: '/user/withdraw',
       params,
-      credentials: true
+      credentials: true,
     }
 
     return this.requestAPI(options)

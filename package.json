@@ -1,22 +1,75 @@
 {
   "name": "@lnmarkets/api",
   "version": "1.0.2",
-  "description": "A set of wrappers to easily communicate with LN Markets API!",
-  "main": "ln-markets.js",
-  "scripts": {
-    "test": "echo \"No tests.\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lnmarkets/api-js.git"
-  },
-  "keywords": [
-    "lnmarkets"
-  ],
+  "description": "A set of wrappers to easily communicate with LN Markets API !",
+  "main": "index.js",
   "author": "BOTREL KIlian",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lnmarkets/api-js/issues"
   },
-  "homepage": "https://github.com/lnmarkets/api-js/#readme"
+  "homepage": "https://github.com/lnmarkets/api-js/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnmarkets/api-js.git"
+  },
+  "keywords": [
+    "lnmarkets",
+    "api",
+    "trading",
+    "sats",
+    "bitcoin"
+  ],
+  "scripts": {
+    "test": "echo \"No tests.\"",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "arrowParens": "always"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "prettier"
+    ],
+    "plugins": [
+      "import",
+      "prettier"
+    ],
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "space-before-function-paren": 0,
+      "new-cap": 0,
+      "prettier/prettier": 2,
+      "camelcase": 0
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.js": "prettier --write"
+  }
 }
