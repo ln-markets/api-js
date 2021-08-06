@@ -48,23 +48,23 @@ All these functions are wrappers for documented public endpoints from LN Markets
 
 Be careful, all methods expect an object as parameter with the correct parameters in it.
 
-- [`addMarginPosition`](#addMarginPosition)
-- [`apiState`](#apiState)
-- [`cancelAllPositions`](#cancelAllPositions)
-- [`cancelPosition`](#cancelPosition)
-- [`cashinPosition`](#cashinPosition)
-- [`closeAllPosisitions`](#closeAllPosisitions)
-- [`closePosition`](#closePosition)
+- [`futuresNewPosition`](#futuresNewPosition)
+- [`futuresGetPositions`](#futuresGetPositions)
+- [`futuresUpdatePosition`](#futuresUpdatePosition)
+- [`futuresAddMarginPosition`](#futuresAddMarginPosition)
+- [`futuresCancelAllPositions`](#futuresCancelAllPositions)
+- [`futuresCancelPosition`](#futuresCancelPosition)
+- [`futuresCashinPosition`](#futuresCashinPosition)
+- [`futuresCloseAllPosisitions`](#futuresCloseAllPosisitions)
+- [`futuresClosePosition`](#futuresClosePosition)
 - [`deposit`](#deposit)
 - [`depositHistory`](#depositHistory)
-- [`futuresDataHistory`](#futuresDataHistory)
+- [`futuresHistory`](#futuresHistory)
 - [`getAnnouncements`](#getAnnouncements)
 - [`getLeaderboard`](#getLeaderboard)
-- [`getPositions`](#getPositions)
 - [`getUser`](#getUser)
-- [`newPosition`](#newPosition)
+- [`apiState`](#apiState)
 - [`nodeState`](#nodeState)
-- [`updatePosition`](#updatePosition)
 - [`updateUser`](#updateUser)
 - [`withdraw`](#withdraw)
 - [`withdrawHistory`](#withdrawHistory)
@@ -77,6 +77,110 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 - [`requestAPI`](#requestAPI)
 
 ## Documentation
+
+### futuresNewPosition
+
+Open a new position on the market.
+
+```yaml
+type:
+  type: String
+  required: true
+  enum: ['l', 'm']
+
+side:
+  type: String
+  required: true
+  enum: ['b', 's']
+
+margin:
+  type: Integer
+  required: false
+
+leverage:
+  type: Float
+  required: true
+
+quantity:
+  type: Integer
+  required: false
+
+takeprofit:
+  type: Integer
+  required: false
+
+stoploss:
+  type: Integer
+  required: false
+
+price:
+  type: Float
+  required: false
+```
+
+Example:
+
+```JS
+  await API.futuresNewPosition({
+    type: 'm',
+    side: 's',
+    margin: 10000,
+    leverage: 25.5,
+  })
+```
+
+[`POST /futures`](https://docs.lnmarkets.com/api/v1/#create) documentation for more details.
+
+### futuresGetPositions
+
+Retrieve all or a part of user positions.
+
+```yaml
+type:
+  type: String
+  required: false
+  enum: ['all', 'open', 'running', 'closed']
+  default: 'all'
+```
+
+Example:
+
+```JS
+  await API.futuresGetPositions({
+    type: 'running'
+  })
+```
+
+### futuresUpdatePosition
+
+Modify stoploss or takeprofit parameter of an existing position.
+
+```yaml
+pid:
+  type: String
+  required: true
+
+type:
+  type: String
+  required: true
+  enum: ['takeprofit', 'stoploss']
+
+value:
+  type: Float
+  required: true
+```
+
+Example:
+
+```JS
+  await API.futuresUpdatePosition({
+    pid: 'b87eef8a-52ab-2fea-1adc-c41fba870b0f',
+    type: 'stoploss',
+    value: 13290.5
+  })
+```
+
+[`PUT /futures`](https://docs.lnmarkets.com/api/v1/#update) documentation for more details.
 
 ### addMargin
 
@@ -102,23 +206,7 @@ Example:
 
 [`POST /futures/add-margin`](https://docs.lnmarkets.com/api/v1/#add-margin) documentation for more details.
 
-### apiState
-
-Retrieve informations related to LN Markets API.
-
-```yaml
-# No parameters
-```
-
-Example:
-
-```JS
-  await API.apiState()
-```
-
-[`GET /state`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
-
-### cancelAllPositions
+### futuresCancelAllPositions
 
 Cancel all oponed (not running) positions for this user.
 
@@ -129,12 +217,12 @@ Cancel all oponed (not running) positions for this user.
 Example:
 
 ```JS
-  await API.cancelAllPositions()
+  await API.futuresCancelAllPositions()
 ```
 
 [`DELETE /futures/all/cancel`](https://docs.lnmarkets.com/api/v1/#cancel-all) documentation for more details.
 
-### cancelPosition
+### futuresCancelPosition
 
 Cancel a particular position for this user.
 
@@ -147,14 +235,14 @@ pid:
 Example:
 
 ```JS
-  await API.cancelPosition({
+  await API.futuresCancelPosition({
     pid: 'b87eef8a-52ab-2fea-1adc-c41fba870b0f'
   })
 ```
 
 [`POST /futures/cancel`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### cashinPosition
+### futuresCashinPosition
 
 Retrieve a part of the general PL of a running position.
 
@@ -170,7 +258,7 @@ pid:
 Example:
 
 ```JS
-  await API.cashinPosition({
+  await API.futuresCashinPosition({
     amount: 1000,
     pid: "99c470e1-2e03-4486-a37f-1255e08178b1"
   })
@@ -178,7 +266,7 @@ Example:
 
 [`POST /futures/cash-in`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### closeAllPosisitions
+### futuresCloseAllPosisitions
 
 Close all running position for this user.
 
@@ -189,12 +277,12 @@ Close all running position for this user.
 Example:
 
 ```JS
-  await API.closeAllPosisitions()
+  await API.futuresCloseAllPosisitions()
 ```
 
 [`DELETE /futures/all/close`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
-### closePosition
+### futuresClosePosition
 
 Close a particular running position for this user.
 
@@ -207,7 +295,7 @@ pid:
 Example:
 
 ```JS
-  await API.closePosition({
+  await API.futuresClosePosition({
     pid: 'a2ca6172-1078-463d-ae3f-8733f36a9b0e'
   })
 ```
@@ -273,7 +361,7 @@ Example:
 
 [`GET /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
 
-### futuresDataHistory
+### futuresHistory
 
 Retrieve the past bid, offer and index data recorded.
 
@@ -297,7 +385,7 @@ limit:
 Example:
 
 ```JS
-  await API.futuresDataHistory({
+  await API.futuresHistory({
     table: 'index',
     limit: 250
   })
@@ -337,26 +425,6 @@ Example:
 
 [`GET /state/leaderboard`](https://docs.lnmarkets.com/api/v1/#api-leaderboard) documentation for more details.
 
-### getPositions
-
-Retrieve all or a part of user positions.
-
-```yaml
-type:
-  type: String
-  required: false
-  enum: ['all', 'open', 'running', 'closed']
-  default: 'all'
-```
-
-Example:
-
-```JS
-  await API.getPositions({
-    type: 'running'
-  })
-```
-
 [`GET /futures`](https://docs.lnmarkets.com/api/v1/#history) documentation for more details.
 
 ### getUser
@@ -375,58 +443,21 @@ Example:
 
 [`GET /user`](https://docs.lnmarkets.com/api/v1/#informations) documentation for more details.
 
-### newPosition
+### apiState
 
-Open a new position on the market.
+Retrieve informations related to LN Markets API.
 
 ```yaml
-type:
-  type: String
-  required: true
-  enum: ['l', 'm']
-
-side:
-  type: String
-  required: true
-  enum: ['b', 's']
-
-margin:
-  type: Integer
-  required: false
-
-leverage:
-  type: Float
-  required: true
-
-quantity:
-  type: Integer
-  required: false
-
-takeprofit:
-  type: Integer
-  required: false
-
-stoploss:
-  type: Integer
-  required: false
-
-price:
-  type: Float
-  required: false
+# No parameters
 ```
 
 Example:
 
 ```JS
-  await API.newPosition({
-    type: 'm',
-    side: 's',
-    margin: 10000,
-    leverage: 25.5,
-  })
+  await API.apiState()
 ```
 
-[`POST /futures`](https://docs.lnmarkets.com/api/v1/#create) documentation for more details.
+[`GET /state`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
 
 ### nodeState
 
@@ -443,37 +474,6 @@ Example:
 ```
 
 [`GET /state/node`](https://docs.lnmarkets.com/api/v1/#node-informations) documentation for more details.
-
-### updatePosition
-
-Modify stoploss or takeprofit parameter of an existing position.
-
-```yaml
-pid:
-  type: String
-  required: true
-
-type:
-  type: String
-  required: true
-  enum: ['takeprofit', 'stoploss']
-
-value:
-  type: Float
-  required: true
-```
-
-Example:
-
-```JS
-  await API.updatePosition({
-    pid: 'b87eef8a-52ab-2fea-1adc-c41fba870b0f',
-    type: 'stoploss',
-    value: 13290.5
-  })
-```
-
-[`PUT /futures`](https://docs.lnmarkets.com/api/v1/#update) documentation for more details.
 
 ### updateUser
 

@@ -71,7 +71,7 @@ module.exports = class LNMarkets {
     })
   }
 
-  newPosition(params) {
+  futuresNewPosition(params) {
     const options = {
       method: 'POST',
       endpoint: '/futures',
@@ -82,7 +82,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  updatePosition(params) {
+  futuresUpdatePosition(params) {
     const options = {
       method: 'PUT',
       endpoint: '/futures',
@@ -93,7 +93,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  closePosition(params) {
+  futuresClosePosition(params) {
     const options = {
       method: 'DELETE',
       endpoint: '/futures',
@@ -104,7 +104,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  closeAllPositions() {
+  futuresCloseAllPositions() {
     const options = {
       method: 'DELETE',
       endpoint: '/futures/all/close',
@@ -114,7 +114,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  cancelPosition(params) {
+  futuresCancelPosition(params) {
     const options = {
       method: 'POST',
       endpoint: '/futures/cancel',
@@ -125,7 +125,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  cancelAllPositions() {
+  futuresCancelAllPositions() {
     const options = {
       method: 'DELETE',
       endpoint: '/futures/all/cancel',
@@ -135,7 +135,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  cashinPosition(params) {
+  futuresCashinPosition(params) {
     const options = {
       method: 'POST',
       endpoint: '/futures/cash-in',
@@ -146,7 +146,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  addMarginPosition(params) {
+  futuresAddMarginPosition(params) {
     const options = {
       method: 'POST',
       endpoint: '/futures/add-margin',
@@ -157,7 +157,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  getPositions(params) {
+  futuresGetPositions(params) {
     const options = {
       method: 'GET',
       endpoint: '/futures',
@@ -168,7 +168,7 @@ module.exports = class LNMarkets {
     return this.requestAPI(options)
   }
 
-  futuresDataHistory(params) {
+  futuresHistory(params) {
     const options = {
       method: 'GET',
       endpoint: '/futures/history',
