@@ -3,7 +3,7 @@ const { LNMarketsWebsocket } = require('../../index.js')
 ;(async () => {
   const lnm = new LNMarketsWebsocket()
   lnm.on('connected', () => {
-    console.log('Connected to LN Markets Webosckets')
+    console.log('Connected to LN Markets websocket')
   })
   lnm.on('message', (message) => {
     console.log(message)
