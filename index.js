@@ -52,7 +52,7 @@ module.exports = class LNMarkets {
             const body = JSON.parse(data)
 
             if (response.statusCode === 200) {
-              resolve({ body, statusCode: response.statusCode })
+              resolve(body)
             } else {
               reject({ body, statusCode: response.statusCode })
             }
