@@ -1,4 +1,4 @@
-const WebsocketClient = require('./lib/Websocket-client.js')
+const WebsocketClient = require('./lib/websocket-client.js')
 const { EventEmitter } = require('events')
 
 module.exports = class LNMarketsWebsocket extends EventEmitter {
