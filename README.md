@@ -39,7 +39,7 @@ All you have to do now is to instanciate a `LNMarketsHttp` object this way:
 
 ```JS
   const { LNMarketsHttp } = require('@lnmarkets/api')
-  const lmm = new LNMarketsHttp({ token: '<YOUR-TOKEN>' })
+  const lnm = new LNMarketsHttp({ token: '<YOUR-TOKEN>' })
   const info = await lnm.nodeState()
 ```
 
