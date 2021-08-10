@@ -1,6 +1,10 @@
 # LN Markets JS API
 
-`@lnmarkets/api` is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
+![NPM Version](https://img.shields.io/npm/v/@lnmarkets/api)
+![NPM Downloads](https://img.shields.io/npm/dw/@lnmarkets/api)
+![Twitter](https://img.shields.io/twitter/follow/LNMarkets?style=social)
+
+[@lnmarkets/api](https://www.npmjs.com/package/@lnmarkets/api) is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
 
 **Note**: This module does not work in the browser.
 
