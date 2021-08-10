@@ -1,8 +1,17 @@
 # LN Markets JS API
 
-![NPM Version](https://img.shields.io/npm/v/@lnmarkets/api)
-![NPM Downloads](https://img.shields.io/npm/dw/@lnmarkets/api)
-![Twitter](https://img.shields.io/twitter/follow/LNMarkets?style=social)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@lnmarkets/api" alt="npm version">
+    <img src="https://img.shields.io/npm/v/@lnmarkets/api" />
+  </a>
+  <a href="https://www.npmjs.com/package/@lnmarkets/api" alt="npm downloads">
+    <img src="https://img.shields.io/npm/dw/@lnmarkets/api" />
+  </a>
+  <a href="https://twitter.com/LNMarkets">
+    <img src="https://img.shields.io/twitter/follow/LNMarkets?style=social"
+        alt="Follow us on Twitter">
+  </a>
+</p>
 
 [@lnmarkets/api](https://www.npmjs.com/package/@lnmarkets/api) is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
 
