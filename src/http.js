@@ -168,15 +168,47 @@ module.exports = class LNMarketsHttp {
     return this.requestAPI(options)
   }
 
-  futuresHistory(params) {
+  futuresBidOfferHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures/history',
+      endpoint: '/futures/history/bid-offer',
       params,
     }
 
     return this.requestAPI(options)
   }
+
+  futuresIndexHistory(params) {
+    const options = {
+      method: 'GET',
+      endpoint: '/futures/history/index',
+      params,
+    }
+
+    return this.requestAPI(options)
+  }
+
+
+  futuresFixingHistory(params) {
+    const options = {
+      method: 'GET',
+      endpoint: '/futures/history/fixing',
+      params,
+    }
+
+    return this.requestAPI(options)
+  }
+
+  futuresCarryFees(params) {
+    const options = {
+      method: 'GET',
+      endpoint: '/futures/carry-fees',
+      params,
+    }
+
+    return this.requestAPI(options)
+  }
+
 
   getUser() {
     const options = {
@@ -275,7 +307,7 @@ module.exports = class LNMarketsHttp {
   getLeaderboard() {
     const options = {
       method: 'GET',
-      endpoint: '/state/leaderboard',
+      endpoint: '/futures/leaderboard',
     }
 
     return this.requestAPI(options)
