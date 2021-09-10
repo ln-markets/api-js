@@ -199,7 +199,7 @@ module.exports = class LNMarketsHttp {
     return this.requestAPI(options)
   }
 
-  futuresCarryFees(params) {
+  futuresCarryFeesHistory(params) {
     const options = {
       method: 'GET',
       endpoint: '/futures/carry-fees',

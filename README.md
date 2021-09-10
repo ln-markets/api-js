@@ -99,6 +99,10 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 - [`futuresCashinPosition`](#futuresCashinPosition)
 - [`futuresCloseAllPosisitions`](#futuresCloseAllPosisitions)
 - [`futuresClosePosition`](#futuresClosePosition)
+- [`futuresIndexHistory`](#futuresIndexHistory)
+- [`futuresBidOfferHistory`](#futuresBidOfferHistory)
+- [`futuresFixingHistory`](#futuresFixingHistory)
+- [`futuresCarryFeesHistory`](#futuresCarryFeesHistory)
 - [`deposit`](#deposit)
 - [`depositHistory`](#depositHistory)
 - [`futuresHistory`](#futuresHistory)
@@ -172,9 +176,19 @@ Retrieve all or a part of user positions.
 ```yaml
 type:
   type: String
+  required: true
+  enum: ['open', 'running', 'closed']
+  default: 'open'
+
+from: Integer
   required: false
-  enum: ['all', 'open', 'running', 'closed']
-  default: 'all'
+
+to: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
 ```
 
 Example:
@@ -184,6 +198,8 @@ Example:
     type: 'running'
   })
 ```
+
+[`GET /futures`](https://docs.lnmarkets.com/api/v1/#history) documentation for more details.
 
 #### futuresUpdatePosition
 
@@ -336,6 +352,110 @@ Example:
 
 [`DELETE /futures`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
 
+#### futuresIndexHistory
+
+Get index history data.
+
+```yaml
+from: Integer
+  required: false
+
+to: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
+```
+
+Example:
+
+```JS
+  await lnm.futuresIndexHistory({
+    limit: 20
+  })
+```
+
+[`GET /futures/history/index`]() documentation for more details (Waiting for new link).
+
+#### futuresBidOfferHistory
+
+Get bid and offer data over time.
+
+```yaml
+from: Integer
+  required: false
+
+to: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
+```
+
+Example:
+
+```JS
+  await lnm.futuresBidOfferHistory({
+    limit: 20
+  })
+```
+
+[`GET /futures/history/bid-offer`]() documentation for more details (Waiting for new link).
+
+#### futuresFixingHistory
+
+Get fixing data history.
+
+```yaml
+from: Integer
+  required: false
+
+to: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
+```
+
+Example:
+
+```JS
+  await lnm.futuresFixingHistory({
+    limit: 20
+  })
+```
+
+[`GET /futures/history/fixing`]() documentation for more details (Waiting for new link).
+
+#### futuresCarryFeesHistory
+
+Get carry-fees history.
+
+```yaml
+from: Integer
+  required: false
+
+to: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
+```
+
+Example:
+
+```JS
+  await lnm.futuresCarryFeesHistory({
+    limit: 20
+  })
+```
+
+[`GET /futures/carry-fees`]() documentation for more details (Waiting for new link).
+
 #### deposit
 
 Add funds to your LN Markets balance.
@@ -365,22 +485,15 @@ Example:
 Retrieve deposit history for this user.
 
 ```yaml
-nbItem:
+from:
   type: Integer
   required: false
-  default: 50
-index:
+
+to:
   type: Integer
   required: false
-  default: 0
-getLength:
-  type: Boolean
-  required: false
-  default: false
-start:
-  type: Integer
-  required: false
-end:
+
+name: limit
   type: Integer
   required: false
 ```
@@ -389,43 +502,12 @@ Example:
 
 ```JS
   await lnm.depositHistory({
-    nbItem: 30
+    limit: 30
   })
 ```
 
 [`GET /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
 
-#### futuresHistory
-
-Retrieve the past bid, offer and index data recorded.
-
-```yaml
-table:
-  type: String
-  required: true
-  enum: ['bid_offer', 'index']
-from:
-  type: Integer
-  required: false
-to:
-  type: Integer
-  required: false
-limit:
-  type: Integer
-  required: false
-  default: 1000
-```
-
-Example:
-
-```JS
-  await lnm.futuresHistory({
-    table: 'index',
-    limit: 250
-  })
-```
-
-[`GET /futures/history`](https://docs.lnmarkets.com/api/v1/#futures-data-history) documentation for more details.
 
 #### getAnnouncements
 
@@ -457,9 +539,7 @@ Example:
   await lnm.getLeaderboard()
 ```
 
-[`GET /state/leaderboard`](https://docs.lnmarkets.com/api/v1/#api-leaderboard) documentation for more details.
-
-[`GET /futures`](https://docs.lnmarkets.com/api/v1/#history) documentation for more details.
+[`GET /futures/leaderboard`]() documentation for more details. (Waiting for new link)
 
 #### getUser
 
@@ -582,22 +662,15 @@ Example:
 Retrieve user withdraw history.
 
 ```yaml
-nbItem:
+from:
   type: Integer
   required: false
-  default: 50
-index:
+
+to:
   type: Integer
   required: false
-  default: 0
-getLength:
-  type: Boolean
-  required: false
-  default: false
-start:
-  type: Integer
-  required: false
-end:
+
+name: limit
   type: Integer
   required: false
 ```
@@ -606,7 +679,7 @@ Example:
 
 ```JS
   await lnm.withdrawHistory({
-    nbItem: 25
+    limit: 25
   })
 ```
 
@@ -635,7 +708,6 @@ Example:
 ```
 
 [`POST /lnurl/withdraw`](https://docs.lnmarkets.com/api/v1/#create-a-lnurl-withdraw) documentation for more details.
-Use LNURL to withdraw directly from the user balance to the wallet
 
 #### requestAPI
 
@@ -675,4 +747,4 @@ Example:
 
 ## Examples
 
-You can find some code examples in the `examples`folder !
+You can find some code examples in the `examples` folder !
