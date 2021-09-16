@@ -63,6 +63,10 @@ module.exports = class LNMarketsHttp {
         })
       })
 
+      call.on('error', (error) => {
+        reject(error)
+      })
+
       if (method.match(/^(PUT|POST)$/) && params) {
         call.write(JSON.stringify(params))
       }
@@ -188,7 +192,6 @@ module.exports = class LNMarketsHttp {
     return this.requestAPI(options)
   }
 
-
   futuresFixingHistory(params) {
     const options = {
       method: 'GET',
@@ -208,7 +211,6 @@ module.exports = class LNMarketsHttp {
 
     return this.requestAPI(options)
   }
-
 
   getUser() {
     const options = {
@@ -257,17 +259,6 @@ module.exports = class LNMarketsHttp {
     const options = {
       method: 'POST',
       endpoint: '/user/withdraw',
-      params,
-      credentials: true,
-    }
-
-    return this.requestAPI(options)
-  }
-
-  withdrawLNURL(params) {
-    const options = {
-      method: 'POST',
-      endpoint: '/lnurl/withdraw',
       params,
       credentials: true,
     }
