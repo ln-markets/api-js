@@ -114,7 +114,6 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 - [`updateUser`](#updateUser)
 - [`withdraw`](#withdraw)
 - [`withdrawHistory`](#withdrawHistory)
-- [`withdrawLNURL`](#withdrawLNURL)
 
 #### futuresNewPosition
 
@@ -180,13 +179,16 @@ type:
   enum: ['open', 'running', 'closed']
   default: 'open'
 
-from: Integer
+from:
+  type: Integer
   required: false
 
-to: Integer
+to:
+  type: Integer
   required: false
 
-limit: Integer
+limit:
+  type: Integer
   required: false
   default: 100
 ```
@@ -357,13 +359,16 @@ Example:
 Get index history data.
 
 ```yaml
-from: Integer
+from: 
+  type: Integer
   required: false
 
-to: Integer
+to: 
+  type: Integer
   required: false
 
-limit: Integer
+limit:
+  type: Integer
   required: false
   default: 100
 ```
@@ -383,10 +388,12 @@ Example:
 Get bid and offer data over time.
 
 ```yaml
-from: Integer
+from:
+  type: Integer
   required: false
 
-to: Integer
+to:
+  type: Integer
   required: false
 
 limit: Integer
@@ -409,13 +416,16 @@ Example:
 Get fixing data history.
 
 ```yaml
-from: Integer
+from:
+  type: Integer
   required: false
 
-to: Integer
+to:
+  type: Integer
   required: false
 
-limit: Integer
+limit:
+  type: Integer
   required: false
   default: 100
 ```
@@ -435,13 +445,16 @@ Example:
 Get carry-fees history.
 
 ```yaml
-from: Integer
+from:
+  type: Integer
   required: false
 
-to: Integer
+to:
+  type: Integer
   required: false
 
-limit: Integer
+limit:
+  type: Integer
   required: false
   default: 100
 ```
@@ -493,7 +506,7 @@ to:
   type: Integer
   required: false
 
-name: limit
+limit:
   type: Integer
   required: false
 ```
@@ -670,7 +683,7 @@ to:
   type: Integer
   required: false
 
-name: limit
+limit:
   type: Integer
   required: false
 ```
@@ -684,30 +697,6 @@ Example:
 ```
 
 [`GET /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw) documentation for more details.
-
-#### withdrawLNURL
-
-Create a LNURL to withdraw from user account.
-
-```yaml
-amount:
-  type: Integer
-  required: true
-unit:
-  type: String
-  required: false
-  default: 'sat'
-```
-
-Example:
-
-```JS
-  await lnm.withdrawLNURL({
-    amount: 40000,
-  })
-```
-
-[`POST /lnurl/withdraw`](https://docs.lnmarkets.com/api/v1/#create-a-lnurl-withdraw) documentation for more details.
 
 #### requestAPI
 
