@@ -376,7 +376,7 @@ Example:
   })
 ```
 
-[`GET /futures/history/index`]() documentation for more details (Waiting for new link).
+[`GET /futures/history/index`](https://docs.lnmarkets.com/api/v1/#futures-index-history) documentation for more details.
 
 #### futuresBidOfferHistory
 
@@ -402,7 +402,7 @@ Example:
   })
 ```
 
-[`GET /futures/history/bid-offer`]() documentation for more details (Waiting for new link).
+[`GET /futures/history/bid-offer`](https://docs.lnmarkets.com/api/v1/#futures-bid-and-offer-history) documentation for more details.
 
 #### futuresFixingHistory
 
@@ -428,7 +428,7 @@ Example:
   })
 ```
 
-[`GET /futures/history/fixing`]() documentation for more details (Waiting for new link).
+[`GET /futures/history/fixing`](https://docs.lnmarkets.com/api/v1/#futures-fixing-history) documentation for more details.
 
 #### futuresCarryFeesHistory
 
@@ -454,7 +454,7 @@ Example:
   })
 ```
 
-[`GET /futures/carry-fees`]() documentation for more details (Waiting for new link).
+[`GET /futures/carry-fees`](https://docs.lnmarkets.com/api/v1/#futures-carry-fees-history) documentation for more details.
 
 #### deposit
 
@@ -539,7 +539,7 @@ Example:
   await lnm.getLeaderboard()
 ```
 
-[`GET /futures/leaderboard`]() documentation for more details. (Waiting for new link)
+[`GET /futures/leaderboard`](https://docs.lnmarkets.com/api/v1/#leaderboard) documentation for more details.
 
 #### getUser
 
