@@ -34,49 +34,14 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "arrowParens": "always"
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "prettier"
-    ],
-    "plugins": [
-      "import",
-      "prettier"
-    ],
-    "env": {
-      "node": true
-    },
-    "rules": {
-      "space-before-function-paren": 0,
-      "new-cap": 0,
-      "prettier/prettier": 2,
-      "camelcase": 0
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.js": "prettier --write"
   }
 }
