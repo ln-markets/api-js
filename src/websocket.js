@@ -1,5 +1,6 @@
 const WebsocketClient = require('./lib/websocket-client.js')
-const { EventEmitter } = require('events')
+const EventEmitter = require('eventemitter3')
+const { randomBytes } = require('crypto')
 
 module.exports = class LNMarketsWebsocket extends EventEmitter {
   constructor(opt = {}) {
@@ -36,14 +37,80 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
     })
   }
 
+  async _send({ request, id = null }) {
+    // Set a random ID if none is sent
+    Object.assign(request, {
+      jsonrpc: '2.0',
+      id: id || randomBytes(8).toString('hex'),
+    })
+
+    return new Promise((resolve, reject) => {
+      try {
+        const message = JSON.stringify(request)
+        this.ws.send(message)
+
+        const done = (response) => {
+          this.removeListener(response.id, done)
+
+          if (response.error) {
+            reject(response.error)
+          } else {
+            resolve(response.result)
+          }
+        }
+
+        this.on(request.id, done)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
   _onMessage(message) {
     try {
-      const data = JSON.parse(message)
-      this.emit('message', data)
+      const response = JSON.parse(message)
+      if (response && response.id) {
+        this.emit(response.id, response)
+      } else {
+        this.emit('message', response)
+      }
     } catch (error) {
       console.error(error)
-      console.error(message)
     }
+  }
+
+  subscribe({ params, id }) {
+    const request = {
+      method: 'subscribe',
+      params,
+    }
+
+    return this._send({ request, id })
+  }
+
+  unsubscribe({ params, id }) {
+    const request = {
+      method: 'unsubscribe',
+      params,
+    }
+
+    return this._send({ request, id })
+  }
+
+  listEvents() {
+    const request = {
+      method: '__listEvents',
+    }
+
+    return this._send({ request })
+  }
+
+  listMethods() {
+    const request = {
+      method: '__listMethods',
+    }
+
+    return this._send({ request })
   }
 
   terminate() {

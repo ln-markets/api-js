@@ -46,7 +46,15 @@ The message format is using [JSON-RPC](https://www.jsonrpc.org/specification) sp
   await lnm.connect()
 ```
 
-## HTTP API
+## Subscription
+
+You can subscribe to LNM Markets public event such as futures bid offer, index and options data.
+
+## Examples
+
+You can find examples for websocket [here](examples/websocket)
+
+## REST API
 
 All you have to do now is to instanciate a `LNMarketsHttp` object this way:
 
@@ -81,6 +89,10 @@ version:
   required: false
   default: 'v1'
 ```
+
+## Examples
+
+You can find examples for rest api [here](examples/rest)
 
 ### Generic Methods
 
@@ -359,11 +371,11 @@ Example:
 Get index history data.
 
 ```yaml
-from: 
+from:
   type: Integer
   required: false
 
-to: 
+to:
   type: Integer
   required: false
 
@@ -520,7 +532,6 @@ Example:
 ```
 
 [`GET /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
-
 
 #### getAnnouncements
 

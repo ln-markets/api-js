@@ -1,7 +1,7 @@
-const LNMarketsHttp = require('./src/http.js')
+const LNMarketsRest = require('./src/rest.js')
 const LNMarketsWebsocket = require('./src/websocket.js')
 
 module.exports = {
-  LNMarketsHttp,
+  LNMarketsRest,
   LNMarketsWebsocket,
 }

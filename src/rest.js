@@ -1,7 +1,7 @@
 const https = require('https')
 const querystring = require('querystring')
 
-module.exports = class LNMarketsHttp {
+module.exports = class LNMarketsRest {
   constructor(opt = {}) {
     const { token, network, version } = opt
 
@@ -54,7 +54,7 @@ module.exports = class LNMarketsHttp {
             if (response.statusCode === 200) {
               resolve(body)
             } else {
-              reject({ body, statusCode: response.statusCode })
+              reject(new Error({ body, statusCode: response.statusCode }))
             }
           } catch (error) {
             error.data = data
