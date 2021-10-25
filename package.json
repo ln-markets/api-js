@@ -5,7 +5,7 @@
   "main": "index.js",
   "files": [
     "index.js",
-    "src/**.js"
+    "src/**/*.js"
   ],
   "author": "BOTREL KIlian",
   "license": "MIT",

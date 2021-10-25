@@ -26,6 +26,10 @@ You can install this package with npm or yarn:
 ```
 
 ```shell
+  $> pnpm install @lnmarkets/api
+```
+
+```shell
   $> yarn add @lnmarkets/api
 ```
 
@@ -56,11 +60,11 @@ You can find examples for websocket [here](examples/websocket)
 
 ## REST API
 
-All you have to do now is to instanciate a `LNMarketsHttp` object this way:
+All you have to do now is to instanciate a `LNMarketsRest` object this way:
 
 ```JS
-  const { LNMarketsHttp } = require('@lnmarkets/api')
-  const lnm = new LNMarketsHttp({ token: '<YOUR-TOKEN>' })
+  const { LNMarketsRest } = require('@lnmarkets/api')
+  const lnm = new LNMarketsRest({ token: '<YOUR-TOKEN>' })
   const info = await lnm.nodeState()
 ```
 

@@ -1,4 +1,4 @@
-const WebsocketClient = require('./lib/websocket-client.js')
+const WebsocketClient = require('./websocket-client.js')
 const EventEmitter = require('eventemitter3')
 const { randomBytes } = require('crypto')
 
