@@ -1,5 +1,5 @@
 const https = require('https')
-const querystring = require('querystring')
+const { URLSearchParams } = require('url')
 
 const getHostname = (network = null) => {
   if (process.env.LNMARKETS_API_URL) {
@@ -20,13 +20,12 @@ module.exports = class LNMarketsRest {
     this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
-
-    console.log(this.hostname)
   }
 
   requestAPI(opt = {}) {
     const { method, endpoint, params, credentials } = opt
     const { hostname, version, token } = this
+
     const options = {
       port: 443,
       hostname,
@@ -42,7 +41,7 @@ module.exports = class LNMarketsRest {
     }
 
     if (method.match(/^(GET|DELETE)$/) && params) {
-      options.path += `?${querystring.stringify(params)}`
+      options.path += `?${new URLSearchParams(params).toString()}`
     }
 
     return new Promise((resolve, reject) => {
@@ -318,6 +317,25 @@ module.exports = class LNMarketsRest {
     const options = {
       method: 'GET',
       endpoint: '/state/announcements',
+    }
+
+    return this.requestAPI(options)
+  }
+
+  getLnurlAuth() {
+    const options = {
+      method: 'POST',
+      endpoint: '/lnurl/auth',
+    }
+
+    return this.requestAPI(options)
+  }
+
+  lnurlAuth(params) {
+    const options = {
+      method: 'GET',
+      endpoint: '/lnurl/auth',
+      params,
     }
 
     return this.requestAPI(options)
