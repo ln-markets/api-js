@@ -29,7 +29,11 @@
   ],
   "scripts": {
     "test": "echo \"No tests.\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "eslint": "eslint --fix",
+    "prettier": "prettier --write",
+    "lint": "eslint --color './**/*.js'",
+    "format": "prettier --write './**/*.js'"
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
