@@ -9,8 +9,13 @@ const { LNMarketsWebsocket } = require('../../index.js')
     })
 
     await lnm.connect()
+
     const params = ['futures/market/index', 'futures/market/bid-offer']
-    await lnm.subscribe({ params })
+    const subscribe = await lnm.subscribe({ params })
+    console.log(`LNM Websockets subscribe to ${subscribe}`)
+    const unsubscribe = await lnm.unsubscribe({ params })
+    console.log(`LNM Websockets unsubscribe to ${unsubscribe}`)
+    lnm.terminate()
   } catch (error) {
     console.error(error)
     process.exit(-1)
