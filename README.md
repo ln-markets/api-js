@@ -1,11 +1,11 @@
 # LN Markets JS API
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@lnmarkets/api" alt="npm version">
-    <img src="https://img.shields.io/npm/v/@lnmarkets/api" />
+  <a href="https://www.npmjs.com/package/@ln-markets/api" alt="npm version">
+    <img src="https://img.shields.io/npm/v/@ln-markets/api" />
   </a>
-  <a href="https://www.npmjs.com/package/@lnmarkets/api" alt="npm downloads">
-    <img src="https://img.shields.io/npm/dw/@lnmarkets/api" />
+  <a href="https://www.npmjs.com/package/@ln-markets/api" alt="npm downloads">
+    <img src="https://img.shields.io/npm/dw/@ln-markets/api" />
   </a>
   <a href="https://twitter.com/LNMarkets">
     <img src="https://img.shields.io/twitter/follow/LNMarkets?style=social"
@@ -13,7 +13,7 @@
   </a>
 </p>
 
-[@lnmarkets/api](https://www.npmjs.com/package/@lnmarkets/api) is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
+[@ln-markets/api](https://www.npmjs.com/package/@ln-markets/api) is a simple way to connect your Node JS application to [LN Markets](https://lnmarkets.com) !
 
 **Note**: This module does not work in the browser.
 
@@ -22,11 +22,15 @@
 You can install this package with npm or yarn:
 
 ```shell
-  $> npm install @lnmarkets/api
+  $> npm install @ln-markets/api
 ```
 
 ```shell
-  $> yarn add @lnmarkets/api
+  $> pnpm install @ln-markets/api
+```
+
+```shell
+  $> yarn add @ln-markets/api
 ```
 
 Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs. You'll need to copy this token as it is needed to authenticate yourself and make requests to the lnm.
@@ -40,7 +44,7 @@ Websockt API is limited now for bid offer and index update, we will make a dedic
 The message format is using [JSON-RPC](https://www.jsonrpc.org/specification) spec.
 
 ```JS
-  const { LNMarketsWebsocket } = require('@lnmarkets/api')
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
   const lnm = new LNMarketsWebsocket()
   lnm.on('message', console.log)
   await lnm.connect()
@@ -56,11 +60,11 @@ You can find examples for websocket [here](examples/websocket)
 
 ## REST API
 
-All you have to do now is to instanciate a `LNMarketsHttp` object this way:
+All you have to do now is to instanciate a `LNMarketsRest` object this way:
 
 ```JS
-  const { LNMarketsHttp } = require('@lnmarkets/api')
-  const lnm = new LNMarketsHttp({ token: '<YOUR-TOKEN>' })
+  const { LNMarketsRest } = require('@ln-markets/api')
+  const lnm = new LNMarketsRest({ token: '<YOUR-TOKEN>' })
   const info = await lnm.nodeState()
 ```
 

@@ -46,13 +46,13 @@ module.exports = class WebsocketClient {
     this.onMessage(data, flags)
   }
 
-  close(e) {
-    this.onClose(e)
+  close(error) {
+    this.onClose(error)
   }
 
-  error(e) {
+  error(error) {
     console.error(error)
-    this.onError(e)
+    this.onError(error)
     this.connected = false
     this.sendPing()
   }
