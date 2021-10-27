@@ -1,17 +1,27 @@
 const https = require('https')
 const querystring = require('querystring')
 
+const getHostname = (network = null) => {
+  if (process.env.LNMARKETS_API_URL) {
+    return process.env.LNMARKETS_API_URL
+  } else if (network === 'mainnet') {
+    return 'api.lnmarkets.com'
+  } else if (network === 'testnet') {
+    return 'api.testnet.lnmarkets.com'
+  }
+  return 'api.lnmarkets.com'
+}
+
 module.exports = class LNMarketsRest {
   constructor(opt = {}) {
     const { token, network, version } = opt
 
     this.token = token
-    this.network = network || 'mainnet'
-    this.version = version || 'v1'
-    this.hostname =
-      this.network === 'mainnet'
-        ? 'api.lnmarkets.com'
-        : 'api.testnet.lnmarkets.com'
+    this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
+    this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
+    this.hostname = getHostname(this.network)
+
+    console.log(this.hostname)
   }
 
   requestAPI(opt = {}) {

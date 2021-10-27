@@ -2,17 +2,26 @@ const WebsocketClient = require('./websocket-client.js')
 const EventEmitter = require('eventemitter3')
 const { randomBytes } = require('crypto')
 
+const getHostname = (network = null) => {
+  if (process.env.LNMARKETS_API_URL) {
+    return process.env.LNMARKETS_API_URL
+  } else if (network === 'mainnet') {
+    return 'api.lnmarkets.com'
+  } else if (network === 'testnet') {
+    return 'api.testnet.lnmarkets.com'
+  }
+  return 'api.lnmarkets.com'
+}
+
 module.exports = class LNMarketsWebsocket extends EventEmitter {
   constructor(opt = {}) {
     super()
-    const { network } = opt
+    const { network, version } = opt
 
     this.ws = undefined
-    this.network = network || 'mainnet'
-    this.hostname =
-      this.network === 'mainnet'
-        ? 'api.lnmarkets.com'
-        : 'api.testnet.lnmarkets.com'
+    this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
+    this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
+    this.hostname = getHostname(this.network)
   }
 
   connect() {

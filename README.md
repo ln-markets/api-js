@@ -37,6 +37,10 @@ Then go to on your LN Markets account under the API section of the Profile to ge
 
 ![Generate Token](https://i.postimg.cc/cJWXkCrj/Untitled.png)
 
+## Configuration
+
+You can pass the network or api version in the constructor or specify it with environement variable
+
 ## Websocket API
 
 Websockt API is limited now for bid offer and index update, we will make a dedicated Websocket api soon !
