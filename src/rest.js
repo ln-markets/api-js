@@ -84,6 +84,10 @@ module.exports = class LNMarketsRest {
     })
   }
 
+  beforeRequestApi(options) {
+    return this.requestAPI(options)
+  }
+
   futuresNewPosition(params) {
     const options = {
       method: 'POST',
@@ -92,7 +96,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresUpdatePosition(params) {
@@ -103,7 +107,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresClosePosition(params) {
@@ -114,7 +118,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresCloseAllPositions() {
@@ -124,7 +128,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresCancelPosition(params) {
@@ -135,7 +139,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresCancelAllPositions() {
@@ -145,7 +149,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresCashinPosition(params) {
@@ -156,7 +160,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresAddMarginPosition(params) {
@@ -167,7 +171,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresGetPositions(params) {
@@ -178,7 +182,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresBidOfferHistory(params) {
@@ -188,7 +192,7 @@ module.exports = class LNMarketsRest {
       params,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresIndexHistory(params) {
@@ -198,7 +202,7 @@ module.exports = class LNMarketsRest {
       params,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresFixingHistory(params) {
@@ -208,7 +212,7 @@ module.exports = class LNMarketsRest {
       params,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   futuresCarryFeesHistory(params) {
@@ -218,7 +222,7 @@ module.exports = class LNMarketsRest {
       params,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   getUser() {
@@ -228,7 +232,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   updateUser(params) {
@@ -239,7 +243,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   deposit(params) {
@@ -250,7 +254,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   depositHistory(params) {
@@ -261,7 +265,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   withdraw(params) {
@@ -272,7 +276,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   withdrawHistory(params) {
@@ -283,7 +287,7 @@ module.exports = class LNMarketsRest {
       credentials: true,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   apiState() {
@@ -292,7 +296,7 @@ module.exports = class LNMarketsRest {
       endpoint: '/state',
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   nodeState() {
@@ -301,7 +305,7 @@ module.exports = class LNMarketsRest {
       endpoint: '/state/node',
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   getLeaderboard() {
@@ -310,7 +314,7 @@ module.exports = class LNMarketsRest {
       endpoint: '/futures/leaderboard',
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   getAnnouncements() {
@@ -319,7 +323,7 @@ module.exports = class LNMarketsRest {
       endpoint: '/state/announcements',
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   getLnurlAuth() {
@@ -328,7 +332,7 @@ module.exports = class LNMarketsRest {
       endpoint: '/lnurl/auth',
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 
   lnurlAuth(params) {
@@ -338,6 +342,6 @@ module.exports = class LNMarketsRest {
       params,
     }
 
-    return this.requestAPI(options)
+    return this.beforeRequestApi(options)
   }
 }
