@@ -16,9 +16,10 @@ const getHostname = (network = null) => {
 module.exports = class LNMarketsWebsocket extends EventEmitter {
   constructor(opt = {}) {
     super()
-    const { network, version } = opt
+    const { network, version, clientOptions = {} } = opt
 
     this.ws = undefined
+    this.clientOptions = clientOptions
     this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
@@ -27,10 +28,10 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
   connect() {
     return new Promise((resolve, reject) => {
       try {
-        const WebsocketOptions = {
+        this.ws = new WebsocketClient({
+          ...this.clientOptions,
           url: `wss://${this.hostname}`,
-        }
-        this.ws = new WebsocketClient(WebsocketOptions)
+        })
       } catch (error) {
         return reject(error)
       }

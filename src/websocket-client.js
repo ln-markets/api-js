@@ -67,7 +67,7 @@ module.exports = class WebsocketClient {
 
     if (this.connected) {
       this.timeout.ping = setTimeout(() => {
-        this.ws.send('ping')
+        this.ws.ping()
       }, this.ping)
     }
 

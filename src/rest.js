@@ -12,6 +12,18 @@ const getHostname = (network = null) => {
   return 'api.lnmarkets.com'
 }
 
+const RestError = class RestError extends Error {
+  constructor(status, message) {
+    if (!status) throw new Error('An HTTP Error need a status')
+
+    super(message)
+
+    this.name = 'RestError'
+    this.status = status
+    this.message = message
+  }
+}
+
 module.exports = class LNMarketsRest {
   constructor(opt = {}) {
     const { token, network, version } = opt
@@ -36,7 +48,7 @@ module.exports = class LNMarketsRest {
       },
     }
 
-    if (credentials) {
+    if (credentials && token) {
       options.headers.Authorization = `Bearer ${token}`
     }
 
@@ -63,7 +75,7 @@ module.exports = class LNMarketsRest {
             if (response.statusCode === 200) {
               resolve(body)
             } else {
-              reject(new Error({ body, statusCode: response.statusCode }))
+              reject(new RestError(response.statusCode, body))
             }
           } catch (error) {
             error.data = data
