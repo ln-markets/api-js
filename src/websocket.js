@@ -41,13 +41,13 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
         resolve()
       }
 
-      this.ws.onMessage = this._onMessage.bind(this)
+      this.ws.onMessage = this.onMessage.bind(this)
 
       this.ws.connect()
     })
   }
 
-  async _send({ request, id = null }) {
+  send({ request, id = null }) {
     // Set a random ID if none is sent
     Object.assign(request, {
       jsonrpc: '2.0',
@@ -76,7 +76,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
     })
   }
 
-  _onMessage(message) {
+  onMessage(message) {
     try {
       const response = JSON.parse(message)
       if (response && response.id) {
@@ -95,7 +95,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       params,
     }
 
-    return this._send({ request, id })
+    return this.send({ request, id })
   }
 
   unsubscribe({ params, id }) {
@@ -104,7 +104,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       params,
     }
 
-    return this._send({ request, id })
+    return this.send({ request, id })
   }
 
   listEvents() {
@@ -112,7 +112,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       method: '__listEvents',
     }
 
-    return this._send({ request })
+    return this.send({ request })
   }
 
   listMethods() {
@@ -120,7 +120,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       method: '__listMethods',
     }
 
-    return this._send({ request })
+    return this.send({ request })
   }
 
   terminate() {

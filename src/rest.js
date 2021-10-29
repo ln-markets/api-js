@@ -2,6 +2,7 @@ const https = require('https')
 const { URLSearchParams } = require('url')
 
 const getHostname = (network = null) => {
+  // If this en var is set ovveride LNMARKETS_NETWORK
   if (process.env.LNMARKETS_API_URL) {
     return process.env.LNMARKETS_API_URL
   } else if (network === 'mainnet') {
@@ -13,69 +14,90 @@ const getHostname = (network = null) => {
 }
 
 const RestError = class RestError extends Error {
-  constructor(status, message) {
-    if (!status) throw new Error('An HTTP Error need a status')
-
+  constructor(statusCode, { code, message }) {
     super(message)
 
-    this.name = 'RestError'
-    this.status = status
+    this.name = 'LNMarketsRestError'
+    this.statusCode = statusCode
+    this.code = code
     this.message = message
   }
 }
 
 module.exports = class LNMarketsRest {
   constructor(opt = {}) {
-    const { token, network, version } = opt
+    const { token, network, version, customHeaders, fullResponse } = opt
 
     this.token = token
     this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
+    this.customHeaders = customHeaders || {}
+    this.fullResponse = false || fullResponse
+    this.debug = false || opt.debug
   }
 
-  requestAPI(opt = {}) {
+  _requestOptions(opt = {}) {
     const { method, endpoint, params, credentials } = opt
-    const { hostname, version, token } = this
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...this.customHeaders,
+    }
 
     const options = {
       port: 443,
-      hostname,
+      hostname: this.hostname,
       method,
-      path: `/${version}${endpoint}`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      path: `/${this.version}${endpoint}`,
+      headers,
     }
 
-    if (credentials && token) {
-      options.headers.Authorization = `Bearer ${token}`
+    if (credentials && this.token) {
+      options.headers.Authorization = `Bearer ${this.token}`
     }
 
     if (method.match(/^(GET|DELETE)$/) && params) {
       options.path += `?${new URLSearchParams(params).toString()}`
     }
 
+    return options
+  }
+
+  requestAPI(opt = {}) {
+    const options = this._requestOptions(opt)
+
     return new Promise((resolve, reject) => {
-      const call = https.request(options, (response) => {
+      const req = https.request(options, (res) => {
+        res.setEncoding('utf8')
+
         let data = ''
 
-        response.on('data', (chunk) => {
+        res.on('data', (chunk) => {
           data += chunk
         })
 
-        response.on('error', (error) => {
+        res.on('error', (error) => {
           reject(error)
         })
 
-        response.on('end', () => {
+        res.on('end', () => {
+          if (this.debug) {
+            return resolve({ req, res })
+          }
+
           try {
             const body = JSON.parse(data)
 
-            if (response.statusCode === 200) {
-              resolve(body)
+            if (res.statusCode === 200) {
+              if (this.fullResponse) {
+                const { statusCode, headers } = res
+                resolve({ body, statusCode, headers })
+              } else {
+                resolve(body)
+              }
             } else {
-              reject(new RestError(response.statusCode, body))
+              reject(new RestError(res.statusCode, body))
             }
           } catch (error) {
             error.data = data
@@ -84,18 +106,19 @@ module.exports = class LNMarketsRest {
         })
       })
 
-      call.on('error', (error) => {
+      req.on('error', (error) => {
         reject(error)
       })
 
-      if (method.match(/^(PUT|POST)$/) && params) {
-        call.write(JSON.stringify(params))
+      if (options.method.match(/^(PUT|POST)$/) && opt.params) {
+        req.write(JSON.stringify(opt.params))
       }
 
-      call.end()
+      req.end()
     })
   }
 
+  // Hook to do stuff before sending a request ...
   beforeRequestApi(options) {
     return this.requestAPI(options)
   }
