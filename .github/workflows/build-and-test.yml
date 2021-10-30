@@ -4,22 +4,26 @@ on:
   push:
     tags-ignore:
       - 'v*.*.*'
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - 'master'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14, 16]
-
+        node: ['14', '16']
+    name: Test Node v${{ matrix.node }} version
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -31,7 +35,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.19.1
+          version: 6
 
       - name: Install
         run: pnpm install --frozen-lockfile --ignore-script
