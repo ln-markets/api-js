@@ -2,9 +2,9 @@ const https = require('https')
 const { URLSearchParams } = require('url')
 
 const getHostname = (network = null) => {
-  // If this en var is set ovveride LNMARKETS_NETWORK
-  if (process.env.LNMARKETS_API_URL) {
-    return process.env.LNMARKETS_API_URL
+  // If this en var is set overide LNMARKETS_NETWORK
+  if (process.env.LNMARKETS_API_HOSTNAME) {
+    return process.env.LNMARKETS_API_HOSTNAME
   } else if (network === 'mainnet') {
     return 'api.lnmarkets.com'
   } else if (network === 'testnet') {
@@ -14,13 +14,21 @@ const getHostname = (network = null) => {
 }
 
 const RestError = class RestError extends Error {
-  constructor(statusCode, { code, message }) {
-    super(message)
+  constructor(statusCode, data) {
+    if (typeof data === 'object') {
+      const { code, message } = data
+      super(message)
+      this.name = 'LNMarketsRestError'
+      this.statusCode = statusCode
+      this.code = code
+      this.message = message
+    } else {
+      super(data)
 
-    this.name = 'LNMarketsRestError'
-    this.statusCode = statusCode
-    this.code = code
-    this.message = message
+      this.name = 'LNMarketsRestError'
+      this.statusCode = statusCode
+      this.message = data
+    }
   }
 }
 

@@ -8,7 +8,7 @@ describe('Rest', () => {
   })
 
   it('Domain does not exis', (done) => {
-    process.env.LNMARKETS_API_URL = 'api.lnmarkets.fr'
+    process.env.LNMARKETS_API_HOSTNAME = 'api.lnmarkets.fr'
 
     const lnm = new LNMarketsRest()
 
@@ -20,7 +20,7 @@ describe('Rest', () => {
       done()
     })
 
-    delete process.env.LNMARKETS_API_URL
+    delete process.env.LNMARKETS_API_HOSTNAME
   })
 
   it('Good request', async () => {

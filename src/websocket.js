@@ -3,8 +3,8 @@ const EventEmitter = require('eventemitter3')
 const { randomBytes } = require('crypto')
 
 const getHostname = (network = null) => {
-  if (process.env.LNMARKETS_API_URL) {
-    return process.env.LNMARKETS_API_URL
+  if (process.env.LNMARKETS_API_HOSTNAME) {
+    return process.env.LNMARKETS_API_HOSTNAME
   } else if (network === 'mainnet') {
     return 'api.lnmarkets.com'
   } else if (network === 'testnet') {

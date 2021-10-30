@@ -39,7 +39,26 @@ Then go to on your LN Markets account under the API section of the Profile to ge
 
 ## Configuration
 
-You can pass the network or api version in the constructor or specify it with environement variable
+You can pass the `network` or api `version` in the constructor or specify it with environement variable.
+
+By default the package will connect to the mainnet api.
+
+- Testnet with constructor params
+
+```JS
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket({ network: 'testnet' })
+```
+
+- Testnet with env var
+
+```JS
+  process.env.LNMARKETS_NETWORK = 'testnet'
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket()
+```
+
+`LNMARKETS_API_HOSTNAME` is only used for debug
 
 ## Websocket API
 
