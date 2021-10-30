@@ -2,7 +2,7 @@ const https = require('https')
 const { URLSearchParams } = require('url')
 
 const getHostname = (network = null) => {
-  // If this en var is set overide LNMARKETS_NETWORK
+  // If this en var is set overide LNMARKETS_API_NETWORK
   if (process.env.LNMARKETS_API_HOSTNAME) {
     return process.env.LNMARKETS_API_HOSTNAME
   } else if (network === 'mainnet') {
@@ -37,7 +37,7 @@ module.exports = class LNMarketsRest {
     const { token, network, version, customHeaders, fullResponse } = opt
 
     this.token = token
-    this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
+    this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
     this.customHeaders = customHeaders || {}

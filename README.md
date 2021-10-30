@@ -53,7 +53,7 @@ By default the package will connect to the mainnet api.
 - Testnet with env var
 
 ```JS
-  process.env.LNMARKETS_NETWORK = 'testnet'
+  process.env.LNMARKETS_API_NETWORK = 'testnet'
   const { LNMarketsWebsocket } = require('@ln-markets/api')
   const lnm = new LNMarketsWebsocket()
 ```

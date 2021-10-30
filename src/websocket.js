@@ -20,7 +20,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
 
     this.ws = undefined
     this.clientOptions = clientOptions
-    this.network = network || process.env.LNMARKETS_NETWORK || 'mainnet'
+    this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
   }
