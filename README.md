@@ -33,17 +33,19 @@ You can install this package with npm or yarn:
   $> yarn add @ln-markets/api
 ```
 
-Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs. You'll need to copy this token as it is needed to authenticate yourself and make requests to the lnm.
+Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs.
+
+You'll need to copy this token as it is needed to authenticate yourself and make requests to LN Markets.
 
 ![Generate Token](https://i.postimg.cc/cJWXkCrj/Untitled.png)
 
 ## Configuration
 
-You can pass the `network` or api `version` in the constructor or specify it with environement variable.
+You can pass the `network`,`version` and `token` in the constructor or specify it with environement variable.
 
 By default the package will connect to the mainnet api.
 
-## Token
+### Token
 
 - As a js variable
 
@@ -61,7 +63,7 @@ By default the package will connect to the mainnet api.
   const lnm = new LNMarketsWebsocket()
 ```
 
-## Network
+### Network
 
 - Testnet with constructor params
 
@@ -80,11 +82,17 @@ By default the package will connect to the mainnet api.
 
 `LNMARKETS_API_HOSTNAME` is only used for debug
 
+### Version
+
+There is only one version aka `v1`
+
 ## Websocket API
 
 Websockt API is limited now for bid offer and index update, we will make a dedicated Websocket api soon !
 
 The message format is using [JSON-RPC](https://www.jsonrpc.org/specification) spec.
+
+The websocket class has an auto ping-pong mechanism and reconnect
 
 ```JS
   const { LNMarketsWebsocket } = require('@ln-markets/api')
@@ -93,11 +101,11 @@ The message format is using [JSON-RPC](https://www.jsonrpc.org/specification) sp
   await lnm.connect()
 ```
 
-## Subscription
+### Subscription
 
 You can subscribe to LNM Markets public event such as futures bid offer, index and options data.
 
-## Examples
+### Examples
 
 You can find examples for websocket [here](examples/websocket)
 
@@ -116,6 +124,10 @@ After this, you'll be able to use all the documented `API` methods below.
 All these functions are wrappers for documented public endpoints from LN Markets API v1. See specification [here](https://docs.lnmarkets.com/api/v1/).
 
 Be careful, all methods expect an object as parameter with the correct parameters in it.
+
+### Examples
+
+You can find examples for rest [here](examples/rest)
 
 ### Options
 
@@ -137,15 +149,12 @@ version:
   default: 'v1'
 ```
 
-## Examples
-
-You can find examples for rest api [here](examples/rest)
-
 ### Generic Methods
 
 These methods are designed to fill the gaps if the API evolves and the future but this package isn't up to date.
 
 - [`requestAPI`](#requestAPI)
+- [`beforeRequestApi`](#beforeRequestApi)
 
 ### Methods
 
@@ -791,7 +800,3 @@ Example:
     credentials: true
   })
 ```
-
-## Examples
-
-You can find some code examples in the `examples` folder !
