@@ -36,7 +36,7 @@ module.exports = class LNMarketsRest {
   constructor(opt = {}) {
     const { token, network, version, customHeaders, fullResponse } = opt
 
-    this.token = token
+    this.token = token || process.env.LNMARKETS_API_TOKEN
     this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)

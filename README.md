@@ -43,6 +43,26 @@ You can pass the `network` or api `version` in the constructor or specify it wit
 
 By default the package will connect to the mainnet api.
 
+## Token
+
+- As a js variable
+
+```JS
+  const token = `<token here, but not safe to store it in the code>`
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket({ token })
+```
+
+- Pass `LNMARKETS_API_TOKEN` env var to your app
+
+```JS
+  // process.env.LNMARKETS_API_TOKEN = 'Token stored in env var'
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket()
+```
+
+## Network
+
 - Testnet with constructor params
 
 ```JS
@@ -50,10 +70,10 @@ By default the package will connect to the mainnet api.
   const lnm = new LNMarketsWebsocket({ network: 'testnet' })
 ```
 
-- Testnet with env var
+- Pass `LNMARKETS_API_NETWORK` env var to your app
 
 ```JS
-  process.env.LNMARKETS_API_NETWORK = 'testnet'
+  // process.env.LNMARKETS_API_NETWORK = 'testnet'
   const { LNMarketsWebsocket } = require('@ln-markets/api')
   const lnm = new LNMarketsWebsocket()
 ```
