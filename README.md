@@ -33,35 +33,90 @@ You can install this package with npm or yarn:
   $> yarn add @ln-markets/api
 ```
 
-Then go to on your LN Markets account under the API section of the Profile to generate an API Token with the right scopes and the right expiry to fit your needs.
+Then go to on your LN Markets account under the API section of the Profile to generate an API Key with the right permissions to fit your needs.
 
-You'll need to copy this token as it is needed to authenticate yourself and make requests to LN Markets.
+## Usage
 
-![Generate Token](https://i.postimg.cc/cJWXkCrj/Untitled.png)
+You can import either Websocket or Rest class from `@ln-markets/api`
 
-## Configuration
+```JS
+  const { LNMarketsWebsocket, LNMarketsRest } = require('@ln-markets/api')
 
-You can pass the `network`,`version` and `token` in the constructor or specify it with environement variable.
+  const websocket = new LNMarketsWebsocket()
+  const rest = new LNMarketsRest()
+```
 
-By default the package will connect to the mainnet api.
+## Authenfification
 
-### Token
+> For authentification you need your api **key** **secret** and **passphrase**
+
+Without you will not bet able to authentificate
+
+### Key
 
 - As a js variable
 
 ```JS
-  const token = `<token here, but not safe to store it in the code>`
+  const key = `<LNM API KEY>`
   const { LNMarketsWebsocket } = require('@ln-markets/api')
-  const lnm = new LNMarketsWebsocket({ token })
+  const lnm = new LNMarketsWebsocket({ key })
 ```
 
-- Pass `LNMARKETS_API_TOKEN` env var to your app
+- Pass `LNMARKETS_API_KEY` env var to your app
 
 ```JS
-  // process.env.LNMARKETS_API_TOKEN = 'Token stored in env var'
+  // process.env.LNMARKETS_API_KEY = `<LNM API KEY>`
   const { LNMarketsWebsocket } = require('@ln-markets/api')
   const lnm = new LNMarketsWebsocket()
 ```
+
+> :warning: **Never share your API Key**
+
+### Secret
+
+- As a js variable
+
+```JS
+  const secret = `<LNM API SECRET>`
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket({ secret })
+```
+
+- Pass `LNMARKETS_API_SECRET` env var to your app
+
+```JS
+  // process.env.LNMARKETS_API_SECRET = `<LNM API SECRET>`
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket()
+```
+
+> :warning: **Never share your API Secret**
+
+### Passphrase
+
+- As a js variable
+
+```JS
+  const passphrase = `<LNM API PASSPHRASE>`
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket({ passphrase })
+```
+
+- Pass `LNMARKETS_API_PASSPHRASE` env var to your app
+
+```JS
+  // process.env.LNMARKETS_API_PASSPHRASE = `<LNM API PASSPHRASE>`
+  const { LNMarketsWebsocket } = require('@ln-markets/api')
+  const lnm = new LNMarketsWebsocket()
+```
+
+> :warning: **Never share your API Passphrase**
+
+## Configuration
+
+You can pass the `network` and `version` in the constructor or specify it with environement variable.
+
+By default the package will connect to the mainnet api.
 
 ### Network
 
@@ -80,13 +135,13 @@ By default the package will connect to the mainnet api.
   const lnm = new LNMarketsWebsocket()
 ```
 
+`LNMARKETS_API_VERSION` There is only one version aka `v1`
+
 `LNMARKETS_API_HOSTNAME` is only used for debug
 
-### Version
-
-There is only one version aka `v1`
-
 ## Websocket API
+
+> :warning: **Websocket API only support subscription**
 
 Websockt API is limited now for bid offer and index update, we will make a dedicated Websocket api soon !
 
@@ -105,6 +160,10 @@ The websocket class has an auto ping-pong mechanism and reconnect
 
 You can subscribe to LNM Markets public event such as futures bid offer, index and options data.
 
+## Authentication
+
+You need to call the `authenticate` method
+
 ### Examples
 
 You can find examples for websocket [here](examples/websocket)
@@ -115,7 +174,7 @@ All you have to do now is to instanciate a `LNMarketsRest` object this way:
 
 ```JS
   const { LNMarketsRest } = require('@ln-markets/api')
-  const lnm = new LNMarketsRest({ token: '<YOUR-TOKEN>' })
+  const lnm = new LNMarketsRest()
   const info = await lnm.nodeState()
 ```
 
@@ -128,26 +187,6 @@ Be careful, all methods expect an object as parameter with the correct parameter
 ### Examples
 
 You can find examples for rest [here](examples/rest)
-
-### Options
-
-This HTTP api require an object as parameter. Here is the list of its possible properties.
-
-```yaml
-token:
-  type: String
-  required: true
-
-network:
-  type: String
-  required: false
-  default: 'mainnet'
-
-version:
-  type: String
-  required: false
-  default: 'v1'
-```
 
 ### Generic Methods
 
@@ -775,7 +814,7 @@ method:
   required: true
   enum: ['GET', 'PUT', 'POST', 'DELETE']
 
-endpoint:
+path:
   type: String
   required: true
 
@@ -789,14 +828,12 @@ credentials:
   default: false
 ```
 
-`endpoint` is which route you want to communicate with, `credentials` is your generated token.
-
 Example:
 
 ```JS
   await lnm.requestAPI({
     method: 'GET',
-    endpoint: '/user',
+    path: '/user',
     credentials: true
   })
 ```

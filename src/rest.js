@@ -1,4 +1,5 @@
 const https = require('https')
+const { createHmac } = require('crypto')
 const { URLSearchParams } = require('url')
 
 const getHostname = (network = null) => {
@@ -10,6 +11,8 @@ const getHostname = (network = null) => {
   } else if (network === 'testnet') {
     return 'api.testnet.lnmarkets.com'
   }
+
+  // Default to mainnet
   return 'api.lnmarkets.com'
 }
 
@@ -34,9 +37,19 @@ const RestError = class RestError extends Error {
 
 module.exports = class LNMarketsRest {
   constructor(opt = {}) {
-    const { token, network, version, customHeaders, fullResponse } = opt
+    const {
+      key,
+      secret,
+      network,
+      version,
+      customHeaders,
+      fullResponse,
+      passphrase,
+    } = opt
 
-    this.token = token || process.env.LNMARKETS_API_TOKEN
+    this.key = key || process.env.LNMARKETS_API_KEY
+    this.secret = secret || process.env.LNMARKETS_API_SECRET
+    this.passphrase = passphrase || process.env.LNMARKETS_API_PASSPHRASE
     this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
@@ -46,23 +59,45 @@ module.exports = class LNMarketsRest {
   }
 
   _requestOptions(opt = {}) {
-    const { method, endpoint, params, credentials } = opt
+    const { method, path, params, credentials } = opt
 
     const headers = {
       'Content-Type': 'application/json',
       ...this.customHeaders,
     }
 
+    if (credentials) {
+      if (!this.key) {
+        throw new Error('You need an API key to use an authenficated route')
+      } else if (!this.secret) {
+        throw new Error('You need an API secret to use an authenficated route')
+      } else if (!this.passphrase) {
+        throw new Error(
+          'You need an API passphrase to use an authenficated route'
+        )
+      }
+
+      const timestamp = Date.now()
+      const data = `${params ? JSON.stringify(params) : ''}`
+
+      const signature = createHmac('sha256', this.secret)
+        .update(`${timestamp}${method}${this.version}${path}${data}`)
+        .digest('base64')
+
+      Object.assign(headers, {
+        'LNM-ACCESS-KEY': this.key,
+        'LNM-ACCESS-PASSPHRASE': this.passphrase,
+        'LNM-ACCESS-TIMESTAMP': timestamp,
+        'LNM-ACCESS-SIGNATURE': signature,
+      })
+    }
+
     const options = {
       port: 443,
       hostname: this.hostname,
+      path: `/${this.version}${path}`,
       method,
-      path: `/${this.version}${endpoint}`,
       headers,
-    }
-
-    if (credentials && this.token) {
-      options.headers.Authorization = `Bearer ${this.token}`
     }
 
     if (method.match(/^(GET|DELETE)$/) && params) {
@@ -134,7 +169,7 @@ module.exports = class LNMarketsRest {
   futuresNewPosition(params) {
     const options = {
       method: 'POST',
-      endpoint: '/futures',
+      path: '/futures',
       params,
       credentials: true,
     }
@@ -145,7 +180,7 @@ module.exports = class LNMarketsRest {
   futuresUpdatePosition(params) {
     const options = {
       method: 'PUT',
-      endpoint: '/futures',
+      path: '/futures',
       params,
       credentials: true,
     }
@@ -156,7 +191,7 @@ module.exports = class LNMarketsRest {
   futuresClosePosition(params) {
     const options = {
       method: 'DELETE',
-      endpoint: '/futures',
+      path: '/futures',
       params,
       credentials: true,
     }
@@ -167,7 +202,7 @@ module.exports = class LNMarketsRest {
   futuresCloseAllPositions() {
     const options = {
       method: 'DELETE',
-      endpoint: '/futures/all/close',
+      path: '/futures/all/close',
       credentials: true,
     }
 
@@ -177,7 +212,7 @@ module.exports = class LNMarketsRest {
   futuresCancelPosition(params) {
     const options = {
       method: 'POST',
-      endpoint: '/futures/cancel',
+      path: '/futures/cancel',
       params,
       credentials: true,
     }
@@ -188,7 +223,7 @@ module.exports = class LNMarketsRest {
   futuresCancelAllPositions() {
     const options = {
       method: 'DELETE',
-      endpoint: '/futures/all/cancel',
+      path: '/futures/all/cancel',
       credentials: true,
     }
 
@@ -198,7 +233,7 @@ module.exports = class LNMarketsRest {
   futuresCashinPosition(params) {
     const options = {
       method: 'POST',
-      endpoint: '/futures/cash-in',
+      path: '/futures/cash-in',
       params,
       credentials: true,
     }
@@ -209,7 +244,7 @@ module.exports = class LNMarketsRest {
   futuresAddMarginPosition(params) {
     const options = {
       method: 'POST',
-      endpoint: '/futures/add-margin',
+      path: '/futures/add-margin',
       params,
       credentials: true,
     }
@@ -220,7 +255,7 @@ module.exports = class LNMarketsRest {
   futuresGetPositions(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures',
+      path: '/futures',
       params,
       credentials: true,
     }
@@ -231,7 +266,7 @@ module.exports = class LNMarketsRest {
   futuresBidOfferHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures/history/bid-offer',
+      path: '/futures/history/bid-offer',
       params,
     }
 
@@ -241,7 +276,7 @@ module.exports = class LNMarketsRest {
   futuresIndexHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures/history/index',
+      path: '/futures/history/index',
       params,
     }
 
@@ -251,7 +286,7 @@ module.exports = class LNMarketsRest {
   futuresFixingHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures/history/fixing',
+      path: '/futures/history/fixing',
       params,
     }
 
@@ -261,7 +296,7 @@ module.exports = class LNMarketsRest {
   futuresCarryFeesHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/futures/carry-fees',
+      path: '/futures/carry-fees',
       params,
     }
 
@@ -271,7 +306,7 @@ module.exports = class LNMarketsRest {
   getUser() {
     const options = {
       method: 'GET',
-      endpoint: '/user',
+      path: '/user',
       credentials: true,
     }
 
@@ -281,7 +316,7 @@ module.exports = class LNMarketsRest {
   updateUser(params) {
     const options = {
       method: 'PUT',
-      endpoint: '/user',
+      path: '/user',
       params,
       credentials: true,
     }
@@ -292,7 +327,7 @@ module.exports = class LNMarketsRest {
   deposit(params) {
     const options = {
       method: 'POST',
-      endpoint: '/user/deposit',
+      path: '/user/deposit',
       params,
       credentials: true,
     }
@@ -303,7 +338,7 @@ module.exports = class LNMarketsRest {
   depositHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/user/deposit',
+      path: '/user/deposit',
       params,
       credentials: true,
     }
@@ -314,7 +349,7 @@ module.exports = class LNMarketsRest {
   withdraw(params) {
     const options = {
       method: 'POST',
-      endpoint: '/user/withdraw',
+      path: '/user/withdraw',
       params,
       credentials: true,
     }
@@ -325,7 +360,7 @@ module.exports = class LNMarketsRest {
   withdrawHistory(params) {
     const options = {
       method: 'GET',
-      endpoint: '/user/withdraw',
+      path: '/user/withdraw',
       params,
       credentials: true,
     }
@@ -336,7 +371,7 @@ module.exports = class LNMarketsRest {
   apiState() {
     const options = {
       method: 'GET',
-      endpoint: '/state',
+      path: '/state',
     }
 
     return this.beforeRequestApi(options)
@@ -345,7 +380,7 @@ module.exports = class LNMarketsRest {
   nodeState() {
     const options = {
       method: 'GET',
-      endpoint: '/state/node',
+      path: '/state/node',
     }
 
     return this.beforeRequestApi(options)
@@ -354,7 +389,7 @@ module.exports = class LNMarketsRest {
   getLeaderboard() {
     const options = {
       method: 'GET',
-      endpoint: '/futures/leaderboard',
+      path: '/futures/leaderboard',
     }
 
     return this.beforeRequestApi(options)
@@ -363,7 +398,7 @@ module.exports = class LNMarketsRest {
   getAnnouncements() {
     const options = {
       method: 'GET',
-      endpoint: '/state/announcements',
+      path: '/state/announcements',
     }
 
     return this.beforeRequestApi(options)
@@ -372,7 +407,7 @@ module.exports = class LNMarketsRest {
   getLnurlAuth() {
     const options = {
       method: 'POST',
-      endpoint: '/lnurl/auth',
+      path: '/lnurl/auth',
     }
 
     return this.beforeRequestApi(options)
@@ -381,7 +416,7 @@ module.exports = class LNMarketsRest {
   lnurlAuth(params) {
     const options = {
       method: 'GET',
-      endpoint: '/lnurl/auth',
+      path: '/lnurl/auth',
       params,
     }
 

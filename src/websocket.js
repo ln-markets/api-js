@@ -1,6 +1,6 @@
 const WebsocketClient = require('./websocket-client.js')
 const EventEmitter = require('eventemitter3')
-const { randomBytes } = require('crypto')
+const { randomBytes, createHmac } = require('crypto')
 
 const getHostname = (network = null) => {
   if (process.env.LNMARKETS_API_HOSTNAME) {
@@ -10,16 +10,28 @@ const getHostname = (network = null) => {
   } else if (network === 'testnet') {
     return 'api.testnet.lnmarkets.com'
   }
+
+  // Default to mainnet
   return 'api.lnmarkets.com'
 }
 
 module.exports = class LNMarketsWebsocket extends EventEmitter {
   constructor(opt = {}) {
     super()
-    const { network, version, clientOptions = {} } = opt
+    const {
+      network,
+      version,
+      key,
+      secret,
+      passphrase,
+      clientOptions = {},
+    } = opt
 
     this.ws = undefined
     this.clientOptions = clientOptions
+    this.key = key || process.env.LNMARKETS_API_KEY
+    this.secret = secret || process.env.LNMARKETS_API_SECRET
+    this.passphrase = passphrase || process.env.LNMARKETS_API_PASSPHRASE
     this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
@@ -45,6 +57,38 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
 
       this.ws.connect()
     })
+  }
+
+  authenticate() {
+    if (!this.key) {
+      throw new Error('You need an API key to use an authenficated route')
+    } else if (!this.secret) {
+      throw new Error('You need an API secret to use an authenficated route')
+    } else if (!this.passphrase) {
+      throw new Error(
+        'You need an API passphrase to use an authenficated route'
+      )
+    }
+
+    const timestamp = Date.now()
+    const method = `auth/api-key`
+    const payload = `${timestamp}${method}`
+
+    const signature = createHmac('sha256', this.secret)
+      .update(payload)
+      .digest('base64')
+
+    const request = {
+      method,
+      params: {
+        timestamp,
+        signature,
+        passphrase: this.passphrase,
+        key: this.key,
+      },
+    }
+    console.log(JSON.stringify(request, null, 2))
+    return this.send({ request })
   }
 
   send({ request, id = null }) {
