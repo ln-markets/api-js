@@ -29,13 +29,15 @@ describe('Rest', () => {
     expect(info).to.be.an('object')
   })
 
-  it('Unauthorized', (done) => {
+  it('No Api Key', () => {
     const lnm = new LNMarketsRest()
-    lnm.futuresCancelAllPositions().catch((error) => {
+    try {
+      lnm.futuresCancelAllPositions()
+    } catch (error) {
       expect(error).to.be.instanceOf(Error)
-      expect(error.statusCode).to.be.equal(401)
-      expect(error.code).to.be.equal('Unauthorized')
-      done()
-    })
+      expect(error.message).to.be.equal(
+        'You need an API key to use an authenficated route'
+      )
+    }
   })
 })
