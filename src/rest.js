@@ -45,6 +45,8 @@ module.exports = class LNMarketsRest {
       customHeaders,
       fullResponse,
       passphrase,
+      skipApiKey,
+      debug,
     } = opt
 
     this.key = key || process.env.LNMARKETS_API_KEY
@@ -55,18 +57,19 @@ module.exports = class LNMarketsRest {
     this.hostname = getHostname(this.network)
     this.customHeaders = customHeaders || {}
     this.fullResponse = false || fullResponse
-    this.debug = false || opt.debug
+    this.debug = false || debug
+    this.skipApiKey = false || skipApiKey
   }
 
   _requestOptions(opt = {}) {
-    const { method, path, params, credentials } = opt
+    const { method, path, params, credentials, headers = {} } = opt
 
-    const headers = {
+    Object.assign(headers, {
       'Content-Type': 'application/json',
       ...this.customHeaders,
-    }
+    })
 
-    if (credentials) {
+    if (credentials && !this.skipApiKey) {
       if (!this.key) {
         throw new Error('You need an API key to use an authenficated route')
       } else if (!this.secret) {
