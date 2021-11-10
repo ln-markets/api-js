@@ -8,7 +8,7 @@ specifiers:
   eslint-config-prettier: 8.3.0
   eslint-config-standard: 16.0.3
   eslint-plugin-chai-friendly: 0.7.2
-  eslint-plugin-import: 2.25.2
+  eslint-plugin-import: 2.25.3
   eslint-plugin-node: 11.1.0
   eslint-plugin-prettier: 4.0.0
   eslint-plugin-promise: 5.1.1
@@ -29,9 +29,9 @@ devDependencies:
   chai: 4.3.4
   eslint: 8.2.0
   eslint-config-prettier: 8.3.0_eslint@8.2.0
-  eslint-config-standard: 16.0.3_543fd3a4884e17a1ee08034f7f644d40
+  eslint-config-standard: 16.0.3_71e62a6d150c2a9eabb469e86106dd38
   eslint-plugin-chai-friendly: 0.7.2_eslint@8.2.0
-  eslint-plugin-import: 2.25.2_eslint@8.2.0
+  eslint-plugin-import: 2.25.3_eslint@8.2.0
   eslint-plugin-node: 11.1.0_eslint@8.2.0
   eslint-plugin-prettier: 4.0.0_307f015733298e29da9050ea0cee5b9e
   eslint-plugin-promise: 5.1.1_eslint@8.2.0
@@ -813,7 +813,7 @@ packages:
       eslint: 8.2.0
     dev: true
 
-  /eslint-config-standard/16.0.3_543fd3a4884e17a1ee08034f7f644d40:
+  /eslint-config-standard/16.0.3_71e62a6d150c2a9eabb469e86106dd38:
     resolution: {integrity: sha512-x4fmJL5hGqNJKGHSjnLdgA6U6h1YW/G2dW9fA+cyVur4SK6lyue8+UgNKWlZtUDTXvgKDD/Oa3GQjmB5kjtVvg==}
     peerDependencies:
       eslint: ^7.12.1
@@ -822,7 +822,7 @@ packages:
       eslint-plugin-promise: ^4.2.1 || ^5.0.0
     dependencies:
       eslint: 8.2.0
-      eslint-plugin-import: 2.25.2_eslint@8.2.0
+      eslint-plugin-import: 2.25.3_eslint@8.2.0
       eslint-plugin-node: 11.1.0_eslint@8.2.0
       eslint-plugin-promise: 5.1.1_eslint@8.2.0
     dev: true
@@ -863,8 +863,8 @@ packages:
       regexpp: 3.2.0
     dev: true
 
-  /eslint-plugin-import/2.25.2_eslint@8.2.0:
-    resolution: {integrity: sha512-qCwQr9TYfoBHOFcVGKY9C9unq05uOxxdklmBXLVvcwo68y5Hta6/GzCZEMx2zQiu0woKNEER0LE7ZgaOfBU14g==}
+  /eslint-plugin-import/2.25.3_eslint@8.2.0:
+    resolution: {integrity: sha512-RzAVbby+72IB3iOEL8clzPLzL3wpDrlwjsTBAQXgyp5SeTqqY+0bFubwuo+y/HLhNZcXV4XqTBO4LGsfyHIDXg==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
