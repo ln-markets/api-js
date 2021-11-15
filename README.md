@@ -46,11 +46,13 @@ You can import either Websocket or Rest class from `@ln-markets/api`
   const rest = new LNMarketsRest()
 ```
 
-## Authenfification
+## Authentication
 
-> For authentification you need your api **key** **secret** and **passphrase**
+> For authentication you need your api **key** **secret** and **passphrase**
 
-Without you will not bet able to authentificate
+Without you will not bet able to authenticate
+
+> :warning: **Never share your API Key, Secret or Passphrase**
 
 ### Key
 
@@ -70,8 +72,6 @@ Without you will not bet able to authentificate
   const lnm = new LNMarketsWebsocket()
 ```
 
-> :warning: **Never share your API Key**
-
 ### Secret
 
 - As a js variable
@@ -90,8 +90,6 @@ Without you will not bet able to authentificate
   const lnm = new LNMarketsWebsocket()
 ```
 
-> :warning: **Never share your API Secret**
-
 ### Passphrase
 
 - As a js variable
@@ -109,8 +107,6 @@ Without you will not bet able to authentificate
   const { LNMarketsWebsocket } = require('@ln-markets/api')
   const lnm = new LNMarketsWebsocket()
 ```
-
-> :warning: **Never share your API Passphrase**
 
 ## Configuration
 
