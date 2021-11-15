@@ -84,7 +84,7 @@ module.exports = class LNMarketsRest {
       const data = `${params ? JSON.stringify(params) : ''}`
 
       const signature = createHmac('sha256', this.secret)
-        .update(`${timestamp}${method}${this.version}${path}${data}`)
+        .update(`${timestamp}${method}/${this.version}${path}${data}`)
         .digest('base64')
 
       Object.assign(headers, {
