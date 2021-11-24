@@ -33,15 +33,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.0.1
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
         with:
           version: 6
 
-      - name: Install
+      - name: Install packages
         run: pnpm install --frozen-lockfile --ignore-script
 
-      - name: Lint
+      - name: Lint the sources
         run: pnpm lint
 
-      - name: Test
+      - name: Run the tests
+        env:
+          LNMARKETS_API_KEY: ${{ secrets.LNMARKETS_API_KEY }}
+          LNMARKETS_API_PASSPHRASE: ${{ secrets.LNMARKETS_API_PASSPHRASE }}
+          LNMARKETS_API_SECRET: ${{ secrets.LNMARKETS_API_SECRET }}
         run: pnpm test
