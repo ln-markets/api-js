@@ -71,17 +71,24 @@ module.exports = class LNMarketsRest {
 
     if (credentials && !this.skipApiKey) {
       if (!this.key) {
-        throw new Error('You need an API key to use an authenficated route')
+        throw new Error('You need an API key to use an authenticated route')
       } else if (!this.secret) {
-        throw new Error('You need an API secret to use an authenficated route')
+        throw new Error('You need an API secret to use an authenticated route')
       } else if (!this.passphrase) {
         throw new Error(
-          'You need an API passphrase to use an authenficated route'
+          'You need an API passphrase to use an authenticated route'
         )
       }
 
       const timestamp = Date.now()
-      const data = `${params ? JSON.stringify(params) : ''}`
+
+      let data
+
+      if (method.match(/^(GET|DELETE)$/) && params) {
+        data = `${params ? new URLSearchParams(params).toString() : ''}`
+      } else {
+        data = `${params ? JSON.stringify(params) : ''}`
+      }
 
       const signature = createHmac('sha256', this.secret)
         .update(`${timestamp}${method}/${this.version}${path}${data}`)

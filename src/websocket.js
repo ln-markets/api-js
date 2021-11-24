@@ -61,12 +61,12 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
 
   authenticate() {
     if (!this.key) {
-      throw new Error('You need an API key to use an authenficated route')
+      throw new Error('You need an API key to use an authenticated route')
     } else if (!this.secret) {
-      throw new Error('You need an API secret to use an authenficated route')
+      throw new Error('You need an API secret to use an authenticated route')
     } else if (!this.passphrase) {
       throw new Error(
-        'You need an API passphrase to use an authenficated route'
+        'You need an API passphrase to use an authenticated route'
       )
     }
 
