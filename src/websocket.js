@@ -35,6 +35,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
     this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
     this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
     this.hostname = getHostname(this.network)
+    this.connected = false
   }
 
   connect() {
@@ -44,19 +45,20 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
           ...this.clientOptions,
           url: `wss://${this.hostname}`,
         })
+
+        this.ws.onOpen = () => {
+          this.emit('connected')
+          this.connected = true
+          resolve()
+        }
+
+        this.ws.onMessage = this.onMessage.bind(this)
+        this.ws.onError = this.onError.bind(this)
+
+        this.ws.connect()
       } catch (error) {
-        return reject(error)
+        reject(error)
       }
-
-      this.ws.onOpen = () => {
-        this.emit('connected')
-        resolve()
-      }
-
-      this.ws.onMessage = this.onMessage.bind(this)
-      this.ws.onError = this.onError.bind(this)
-
-      this.ws.connect()
     })
   }
 
@@ -69,6 +71,8 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       throw new Error(
         'You need an API passphrase to use an authenticated route'
       )
+    } else if (!this.connected) {
+      throw new Error('You are not connected to the LN Markets websocket')
     }
 
     const timestamp = Date.now()

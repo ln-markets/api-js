@@ -17,15 +17,15 @@ module.exports = () => {
     expect(lnm).to.be.instanceOf(LNMarketsRest)
   })
 
-  it('Domain does not exis', (done) => {
-    process.env.LNMARKETS_API_HOSTNAME = 'api.lnmarkets.fr'
+  it('Domain does not exist', (done) => {
+    process.env.LNMARKETS_API_HOSTNAME = 'api.lnmarkets.lol'
 
     const lnm = new LNMarketsRest()
 
     lnm.nodeState().catch((error) => {
       expect(error).to.be.instanceOf(Error)
       expect(error.message).to.be.equal(
-        'getaddrinfo ENOTFOUND api.lnmarkets.fr'
+        'getaddrinfo ENOTFOUND api.lnmarkets.lol'
       )
       done()
     })

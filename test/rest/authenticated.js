@@ -2,23 +2,28 @@ const { expect } = require('chai')
 const { LNMarketsRest } = require('../../index.js')
 
 module.exports = () => {
-  it('Get User', async () => {
+  it('Query Params', async () => {
     const lnm = new LNMarketsRest()
     const user = await lnm.getUser()
     expect(user).to.be.an('object')
   })
 
-  it('Get Deposit History', async () => {
+  it('Body Params', async () => {
     const lnm = new LNMarketsRest()
-    const history = await lnm.depositHistory({ limit: 100 })
-    expect(history).to.be.an('array')
+    const user = await lnm.updateUser({ username: 'Satoshi Nakamoto' })
+    expect(user).to.be.an('object')
   })
 
   it('Should be rejected', () => {
     const lnm = new LNMarketsRest()
-    return lnm.depositHistory({ limit: 101 }).catch((error) => {
-      expect(error).to.be.instanceOf(Error)
-      expect(error.statusCode).to.be.equal(400)
-    })
+    return lnm
+      .depositHistory({ limit: 101 })
+      .then(() => {
+        throw new Error('Was not supposed to succeed')
+      })
+      .catch((error) => {
+        expect(error).to.be.instanceOf(Error)
+        expect(error.statusCode).to.be.equal(400)
+      })
   })
 }
