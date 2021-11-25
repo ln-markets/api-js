@@ -54,6 +54,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
       }
 
       this.ws.onMessage = this.onMessage.bind(this)
+      this.ws.onError = this.onError.bind(this)
 
       this.ws.connect()
     })
@@ -129,8 +130,12 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
         this.emit('message', response)
       }
     } catch (error) {
-      console.error(error)
+      this.emit('error', response)
     }
+  }
+
+  onError(error) {
+    this.emit('error', error)
   }
 
   subscribe({ params, id }) {

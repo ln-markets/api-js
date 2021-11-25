@@ -21,6 +21,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'no-console': 2,
     'promise/no-callback-in-promise': 'off',
     'space-before-function-paren': 'off',
     'import/no-unresolved': ['error', { commonjs: true }],

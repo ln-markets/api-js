@@ -152,6 +152,8 @@ The websocket class has an auto ping-pong mechanism and reconnect
   await lnm.connect()
 ```
 
+The `LNMarketsWebsocket` class emit events on `connected` `message` `error`
+
 ### Subscription
 
 You can subscribe to LNM Markets public event such as futures bid offer, index and options data.

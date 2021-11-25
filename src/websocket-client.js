@@ -51,7 +51,6 @@ module.exports = class WebsocketClient {
   }
 
   error(error) {
-    console.error(error)
     this.onError(error)
     this.connected = false
     this.sendPing()
