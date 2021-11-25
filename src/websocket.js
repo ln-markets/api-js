@@ -87,7 +87,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
         key: this.key,
       },
     }
-    console.log(JSON.stringify(request, null, 2))
+
     return this.send({ request })
   }
 
