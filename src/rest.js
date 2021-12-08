@@ -176,6 +176,16 @@ module.exports = class LNMarketsRest {
     return this.requestAPI(options)
   }
 
+  futuresGetTicker(params = {}) {
+    const options = {
+      method: 'GET',
+      path: '/futures/ticker',
+      params,
+    }
+
+    return this.beforeRequestApi(options)
+  }
+
   futuresNewPosition(params) {
     const options = {
       method: 'POST',
@@ -378,19 +388,19 @@ module.exports = class LNMarketsRest {
     return this.beforeRequestApi(options)
   }
 
-  apiState() {
+  appConfiguration() {
     const options = {
       method: 'GET',
-      path: '/state',
+      path: '/app/configuration',
     }
 
     return this.beforeRequestApi(options)
   }
 
-  nodeState() {
+  appNode() {
     const options = {
       method: 'GET',
-      path: '/state/node',
+      path: '/app/node',
     }
 
     return this.beforeRequestApi(options)
@@ -408,7 +418,7 @@ module.exports = class LNMarketsRest {
   getAnnouncements() {
     const options = {
       method: 'GET',
-      path: '/state/announcements',
+      path: '/app/announcements',
     }
 
     return this.beforeRequestApi(options)

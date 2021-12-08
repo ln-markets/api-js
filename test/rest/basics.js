@@ -22,7 +22,7 @@ module.exports = () => {
 
     const lnm = new LNMarketsRest()
 
-    lnm.nodeState().catch((error) => {
+    lnm.appNode().catch((error) => {
       expect(error).to.be.instanceOf(Error)
       expect(error.message).to.be.equal(
         'getaddrinfo ENOTFOUND api.lnmarkets.lol'
@@ -74,7 +74,7 @@ module.exports = () => {
 
   it('Good request', async () => {
     const lnm = new LNMarketsRest()
-    const info = await lnm.nodeState()
+    const info = await lnm.appNode()
     expect(info).to.be.an('object')
   })
 

@@ -173,7 +173,7 @@ All you have to do now is to instanciate a `LNMarketsRest` object this way:
 ```JS
   const { LNMarketsRest } = require('@ln-markets/api')
   const lnm = new LNMarketsRest()
-  const info = await lnm.nodeState()
+  const info = await lnm.appNode()
 ```
 
 After this, you'll be able to use all the documented `API` methods below.
@@ -195,6 +195,7 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 
 ### Methods
 
+- [`futuresGetTicker`](#futuresGetTicker)
 - [`futuresNewPosition`](#futuresNewPosition)
 - [`futuresGetPositions`](#futuresGetPositions)
 - [`futuresUpdatePosition`](#futuresUpdatePosition)
@@ -214,11 +215,23 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 - [`getAnnouncements`](#getAnnouncements)
 - [`getLeaderboard`](#getLeaderboard)
 - [`getUser`](#getUser)
-- [`apiState`](#apiState)
-- [`nodeState`](#nodeState)
+- [`appConfiguration`](#appConfiguration)
+- [`appNode`](#appNode)
 - [`updateUser`](#updateUser)
 - [`withdraw`](#withdraw)
 - [`withdrawHistory`](#withdrawHistory)
+
+#### futuresGetTicker
+
+Get the ticker of LN Markets
+
+Example:
+
+```JS
+  await lnm.futuresGetTicker()
+```
+
+[`GET /futures/ticker`](https://docs.lnmarkets.com/api/v1/#ticker) documentation for more details.
 
 #### futuresNewPosition
 
@@ -640,7 +653,7 @@ Example:
   await lnm.getAnnouncements()
 ```
 
-[`GET /state/announcemenets`](https://docs.lnmarkets.com/api/v1/#get-the-ln-markets-announcements) documentation for more details.
+[`GET /app/announcemenets`](https://docs.lnmarkets.com/api/v1/#get-the-ln-markets-announcements) documentation for more details.
 
 #### getLeaderboard
 
@@ -674,9 +687,9 @@ Example:
 
 [`GET /user`](https://docs.lnmarkets.com/api/v1/#informations) documentation for more details.
 
-#### apiState
+#### appConfiguration
 
-Retrieve informations related to LN Markets lnm.
+Retrieve informations related to LN Markets.
 
 ```yaml
 # No parameters
@@ -685,12 +698,12 @@ Retrieve informations related to LN Markets lnm.
 Example:
 
 ```JS
-  await lnm.apiState()
+  await lnm.appConfiguration()
 ```
 
-[`GET /state`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
+[`GET /app/configuration`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
 
-#### nodeState
+#### appNode
 
 Show informations about LN Markets lightning node.
 
@@ -701,10 +714,10 @@ Show informations about LN Markets lightning node.
 Example:
 
 ```JS
-  await lnm.nodeState()
+  await lnm.appNode()
 ```
 
-[`GET /state/node`](https://docs.lnmarkets.com/api/v1/#node-informations) documentation for more details.
+[`GET /app/node`](https://docs.lnmarkets.com/api/v1/#node-informations) documentation for more details.
 
 #### updateUser
 
