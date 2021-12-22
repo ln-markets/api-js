@@ -1,4 +1,4 @@
-const { LNMarketsWebsocket } = require('../../index.js')
+const { LNMarketsWebsocket } = require('../../src/index.js')
 
 ;(async () => {
   try {

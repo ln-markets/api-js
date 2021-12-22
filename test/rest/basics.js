@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { LNMarketsRest } = require('../../index.js')
+const { LNMarketsRest } = require('../../src/index.js')
 
 let oldEnv = {}
 

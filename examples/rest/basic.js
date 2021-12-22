@@ -1,4 +1,4 @@
-const { LNMarketsRest } = require('../../index.js')
+const { LNMarketsRest } = require('../../src/index.js')
 
 ;(async () => {
   const lnm = new LNMarketsRest()

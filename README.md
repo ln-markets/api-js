@@ -39,11 +39,16 @@ Then go to on your LN Markets account under the API section of the Profile to ge
 
 You can import either Websocket or Rest class from `@ln-markets/api`
 
+Common JS
+
 ```JS
   const { LNMarketsWebsocket, LNMarketsRest } = require('@ln-markets/api')
+```
 
-  const websocket = new LNMarketsWebsocket()
-  const rest = new LNMarketsRest()
+ES Modules
+
+```JS
+  import { LNMarketsWebsocket, LNMarketsRest } from '@ln-markets/api'
 ```
 
 ## Authentication
