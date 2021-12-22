@@ -1,6 +1,6 @@
 {
   "name": "@ln-markets/api",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A set of wrappers to easily communicate with LN Markets API !",
   "main": "src/index.js",
   "module": "esm/index.mjs",
