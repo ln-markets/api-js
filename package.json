@@ -3,14 +3,16 @@
   "version": "1.6.0",
   "description": "A set of wrappers to easily communicate with LN Markets API !",
   "main": "src/index.js",
-  "module": "esm/index.js",
+  "module": "esm/index.mjs",
   "files": [
     "src/**/*.js",
-    "esm/**/*.js"
+    "esm/**/*.mjs"
   ],
   "exports": {
-    "require": "./src/index.js",
-    "import": "./esm/index.js"
+    ".": {
+      "import": "./esm/index.mjs",
+      "require": "./src/index.js"
+    }
   },
   "author": "BOTREL Kilian",
   "license": "MIT",
@@ -41,8 +43,8 @@
     "prepare": "husky install",
     "eslint": "eslint --fix",
     "prettier": "prettier --write",
-    "lint": "eslint --color './**/*.js'",
-    "format": "prettier --write './**/*.js'"
+    "lint": "eslint --color './**/*.{js,mjs}'",
+    "format": "prettier --write './**/*.{js,mjs}'"
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
