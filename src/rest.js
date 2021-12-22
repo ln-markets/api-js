@@ -82,12 +82,12 @@ module.exports = class LNMarketsRest {
 
       const timestamp = Date.now()
 
-      let data
+      let data = ''
 
-      if (method.match(/^(GET|DELETE)$/) && params) {
-        data = `${params ? new URLSearchParams(params).toString() : ''}`
+      if (method.match(/^(GET|DELETE)$/)) {
+        data = new URLSearchParams(params).toString()
       } else {
-        data = `${params ? JSON.stringify(params) : ''}`
+        data = JSON.stringify(params)
       }
 
       const signature = createHmac('sha256', this.secret)
