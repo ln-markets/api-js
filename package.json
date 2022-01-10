@@ -51,7 +51,7 @@
     "ws": "^8.3.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "16.0.1",
+    "@commitlint/cli": "16.0.2",
     "@commitlint/config-conventional": "16.0.0",
     "chai": "4.3.4",
     "dotenv": "10.0.0",
