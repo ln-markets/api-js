@@ -4,7 +4,7 @@ specifiers:
   '@commitlint/cli': 16.0.2
   '@commitlint/config-conventional': 16.0.0
   chai: 4.3.4
-  dotenv: 11.0.0
+  dotenv: 12.0.3
   eslint: 8.6.0
   eslint-config-prettier: 8.3.0
   eslint-config-standard: 16.0.3
@@ -28,7 +28,7 @@ devDependencies:
   '@commitlint/cli': 16.0.2
   '@commitlint/config-conventional': 16.0.0
   chai: 4.3.4
-  dotenv: 11.0.0
+  dotenv: 12.0.3
   eslint: 8.6.0
   eslint-config-prettier: 8.3.0_eslint@8.6.0
   eslint-config-standard: 16.0.3_8d3cc733693a55bff97313a767012510
@@ -818,8 +818,8 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv/11.0.0:
-    resolution: {integrity: sha512-Fp/b504Y5W+e+FpCxTFMUZ7ZEQkQYF0rx+KZtmwixJxGQbLHrhCwo3FjZgNC8vIfrSi29PABNbMoCGD9YoiXbQ==}
+  /dotenv/12.0.3:
+    resolution: {integrity: sha512-RlOysyzyGiABgDFgITo5fRnMV1QStdoVvkXhnxQc5Or/CiQo52s2Bh6DVMvzZsmFQ9IrNxYHOC/gdpNwHsitnQ==}
     engines: {node: '>=12'}
     dev: true
 
