@@ -15,7 +15,7 @@ specifiers:
   eslint-plugin-promise: 6.0.0
   eventemitter3: ^4.0.7
   husky: 7.0.4
-  lint-staged: 12.3.7
+  lint-staged: 12.3.8
   mocha: 9.2.2
   prettier: 2.6.2
   ws: ^8.3.0
@@ -38,7 +38,7 @@ devDependencies:
   eslint-plugin-prettier: 4.0.0_1815ac95b7fb26c13c7d48a8eef62d0f
   eslint-plugin-promise: 6.0.0_eslint@8.13.0
   husky: 7.0.4
-  lint-staged: 12.3.7
+  lint-staged: 12.3.8
   mocha: 9.2.2
   prettier: 2.6.2
 
@@ -1670,8 +1670,8 @@ packages:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
 
-  /lint-staged/12.3.7:
-    resolution: {integrity: sha512-/S4D726e2GIsDVWIk1XGvheCaDm1SJRQp8efamZFWJxQMVEbOwSysp7xb49Oo73KYCdy97mIWinhlxcoNqIfIQ==}
+  /lint-staged/12.3.8:
+    resolution: {integrity: sha512-0+UpNaqIwKRSGAFOCcpuYNIv/j5QGVC+xUVvmSdxHO+IfIGoHbFLo3XcPmV/LLnsVj5EAncNHVtlITSoY5qWGQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     hasBin: true
     dependencies:
