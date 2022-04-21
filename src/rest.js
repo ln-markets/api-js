@@ -448,6 +448,7 @@ module.exports = class LNMarketsRest {
       method: 'GET',
       path: '/options/vanilla',
       params,
+      credentials: true,
     }
 
     return this.beforeRequestApi(options)
@@ -458,6 +459,7 @@ module.exports = class LNMarketsRest {
       method: 'POST',
       path: '/options/vanilla',
       params,
+      credentials: true,
     }
 
     return this.beforeRequestApi(options)
