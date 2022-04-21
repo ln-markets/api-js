@@ -193,7 +193,7 @@ You can find examples for rest [here](examples/rest)
 
 ### Generic Methods
 
-These methods are designed to fill the gaps if the API evolves and the future but this package isn't up to date.
+These methods are designed to fill the gaps if the API evolves in the future but this package isn't up to date.
 
 - [`requestAPI`](#requestAPI)
 - [`beforeRequestApi`](#beforeRequestApi)
@@ -225,6 +225,8 @@ These methods are designed to fill the gaps if the API evolves and the future bu
 - [`updateUser`](#updateUser)
 - [`withdraw`](#withdraw)
 - [`withdrawHistory`](#withdrawHistory)
+- [`optionsGetPositions`](#optionsGetPositions)
+- [`optionsNewPosition`](#optionsNewPosition)
 
 #### futuresGetTicker
 
@@ -240,7 +242,7 @@ Example:
 
 #### futuresNewPosition
 
-Open a new position on the market.
+Open a new future position on the market.
 
 ```yaml
 type:
@@ -293,7 +295,7 @@ Example:
 
 #### futuresGetPositions
 
-Retrieve all or a part of user positions.
+Retrieve all or a part of user futures positions.
 
 ```yaml
 type:
@@ -819,6 +821,81 @@ Example:
 ```
 
 [`GET /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw) documentation for more details.
+
+#### optionsGetPositions
+
+Retrieve all or a part of user options positions.
+
+```yaml
+status:
+  type: String
+  enum: ['running', 'closed']
+  default: running
+  required: true
+
+from:
+  type: Integer
+  required: false
+
+to:
+  type: Integer
+  required: false
+
+limit:
+  type: Integer
+  required: false
+```
+
+Example:
+
+```JS
+  await lnm.optionsGetPositions({
+    limit: 25,
+    status: 'closed'
+  })
+```
+
+[`GET /options/vanilla`](https://docs.lnmarkets.com/api/v1) documentation for more details.
+
+#### optionsNewPosition
+
+Open a new option position on the market.
+
+```yaml
+side:
+  type: String
+  enum: ['b']
+  required: true
+
+type:
+  type: String
+  enum: ['c', 'p']
+  required: true
+
+quantity:
+  type: Integer
+  required: true
+
+strike:
+  type: Integer
+  required: true
+
+settlement:
+  type: String
+  enum: ['physical', 'cash']
+  required: true
+```
+
+Example:
+
+```JS
+  await lnm.optionsGetPositions({
+    limit: 25,
+    status: 'closed'
+  })
+```
+
+[`POST /options/vanilla`](https://docs.lnmarkets.com/api/v1) documentation for more details.
 
 #### requestAPI
 

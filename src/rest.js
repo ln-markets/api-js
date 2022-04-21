@@ -442,4 +442,26 @@ module.exports = class LNMarketsRest {
 
     return this.beforeRequestApi(options)
   }
+
+  optionsGetPositions(params) {
+    const options = {
+      method: 'GET',
+      path: '/options/vanilla',
+      params,
+      credentials: true,
+    }
+
+    return this.beforeRequestApi(options)
+  }
+
+  optionsNewPosition(params) {
+    const options = {
+      method: 'POST',
+      path: '/options/vanilla',
+      params,
+      credentials: true,
+    }
+
+    return this.beforeRequestApi(options)
+  }
 }
