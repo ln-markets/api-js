@@ -227,6 +227,9 @@ These methods are designed to fill the gaps if the API evolves in the future but
 - [`withdrawHistory`](#withdrawHistory)
 - [`optionsGetPositions`](#optionsGetPositions)
 - [`optionsNewPosition`](#optionsNewPosition)
+- [`optionsGetConfiguration`](#optionsGetConfiguration)
+- [`optionsGetVolatility`](#optionsGetVolatility)
+
 
 #### futuresGetTicker
 
@@ -855,7 +858,7 @@ Example:
   })
 ```
 
-[`GET /options/vanilla`](https://docs.lnmarkets.com/api/v1) documentation for more details.
+[`GET /options/vanilla`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_GetVanillaTrades) documentation for more details.
 
 #### optionsNewPosition
 
@@ -895,7 +898,40 @@ Example:
   })
 ```
 
-[`POST /options/vanilla`](https://docs.lnmarkets.com/api/v1) documentation for more details.
+[`POST /options/vanilla`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_newTrade) documentation for more details.
+
+#### optionsGetConfiguration
+
+Get the options current configuration.
+
+```yaml
+# No parameters
+```
+
+Example:
+
+```JS
+  await lnm.optionsGetConfiguration()
+```
+
+[`GET /options/instrument`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_Instrument) documentation for more details.
+
+#### optionsGetVolatility
+
+Get the current volatility.
+
+```yaml
+# No parameters
+```
+
+Example:
+
+```JS
+  await lnm.optionsGetVolatility()
+```
+
+[`GET /options/volatility`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_getVolatility) documentation for more details.
+
 
 #### requestAPI
 

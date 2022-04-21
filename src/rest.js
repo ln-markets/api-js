@@ -464,4 +464,22 @@ module.exports = class LNMarketsRest {
 
     return this.beforeRequestApi(options)
   }
+
+  optionsGetConfiguration() {
+    const options = {
+      method: 'GET',
+      path: '/options/instrument',
+    }
+
+    return this.beforeRequestApi(options)
+  }
+
+  optionsGetVolatility() {
+    const options = {
+      method: 'GET',
+      path: '/options/volatility',
+    }
+
+    return this.beforeRequestApi(options)
+  }
 }
