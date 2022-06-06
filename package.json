@@ -54,7 +54,7 @@
     "@commitlint/cli": "16.2.4",
     "@commitlint/config-conventional": "16.2.4",
     "chai": "4.3.6",
-    "dotenv": "16.0.0",
+    "dotenv": "16.0.1",
     "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "17.0.0",
