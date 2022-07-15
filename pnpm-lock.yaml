@@ -17,11 +17,11 @@ specifiers:
   lint-staged: 13.0.3
   mocha: 10.0.0
   prettier: 2.7.1
-  ws: 8.8.0
+  ws: 8.8.1
 
 dependencies:
   eventemitter3: 4.0.7
-  ws: 8.8.0
+  ws: 8.8.1
 
 devDependencies:
   '@commitlint/cli': 17.0.2
@@ -2785,8 +2785,8 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
-  /ws/8.8.0:
-    resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
+  /ws/8.8.1:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
