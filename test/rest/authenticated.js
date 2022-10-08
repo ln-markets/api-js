@@ -10,7 +10,7 @@ module.exports = () => {
 
   it('Body Params', async () => {
     const lnm = new LNMarketsRest()
-    const user = await lnm.updateUser({ username: 'Satoshi Nakamoto' })
+    const user = await lnm.updateUser({ username: 'SatoshiNakamoto' })
     expect(user).to.be.an('object')
   })
 
