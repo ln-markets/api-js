@@ -99,6 +99,7 @@ module.exports = class LNMarketsWebsocket extends EventEmitter {
   send({ request, id = null }) {
     // Set a random ID if none is sent
     Object.assign(request, {
+      method: `${this.version}/${request.method}`,
       jsonrpc: '2.0',
       id: id || randomBytes(8).toString('hex'),
     })
