@@ -48,20 +48,20 @@
   },
   "dependencies": {
     "eventemitter3": "4.0.7",
-    "ws": "8.8.0"
+    "ws": "8.9.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.0.2",
-    "@commitlint/config-conventional": "17.0.2",
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
     "chai": "4.3.6",
-    "dotenv": "16.0.1",
-    "eslint": "8.18.0",
+    "dotenv": "16.0.3",
+    "eslint": "8.25.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-promise": "6.0.1",
     "husky": "8.0.1",
     "lint-staged": "13.0.3",
     "mocha": "10.0.0",
