@@ -53,12 +53,17 @@ module.exports = class LNMarketsRest {
     this.secret = secret || process.env.LNMARKETS_API_SECRET
     this.passphrase = passphrase || process.env.LNMARKETS_API_PASSPHRASE
     this.network = network || process.env.LNMARKETS_API_NETWORK || 'mainnet'
-    this.version = version || process.env.LNMARKETS_API_VERSION || 'v1'
+    this.version = version || process.env.LNMARKETS_API_VERSION || 'v2'
     this.hostname = getHostname(this.network)
     this.customHeaders = customHeaders || {}
     this.fullResponse = false || fullResponse
     this.debug = false || debug
     this.skipApiKey = false || skipApiKey
+
+    if (this.version === 'v1') {
+      // eslint-disable-next-line no-console
+      console.warn('LNMarkets API v1 will soon be deprecated, please use v2')
+    }
   }
 
   _requestOptions(opt = {}) {
@@ -283,7 +288,29 @@ module.exports = class LNMarketsRest {
     return this.beforeRequestApi(options)
   }
 
+  futuresPriceHistory(params) {
+    if (this.version === 'v1') {
+      throw new Error(
+        'This method is not available in v1. Switch to v2 or use the old futuresBidOfferHistory instead.'
+      )
+    }
+
+    const options = {
+      method: 'GET',
+      path: '/futures/history/price',
+      params,
+    }
+
+    return this.beforeRequestApi(options)
+  }
+
   futuresBidOfferHistory(params) {
+    if (this.version === 'v1') {
+      throw new Error(
+        'This method is not available in v2, use the new futuresPriceHistory instead.'
+      )
+    }
+
     const options = {
       method: 'GET',
       path: '/futures/history/bid-offer',

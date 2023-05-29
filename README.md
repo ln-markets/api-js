@@ -136,7 +136,7 @@ By default the package will connect to the mainnet api.
   const lnm = new LNMarketsWebsocket()
 ```
 
-`LNMARKETS_API_VERSION` There is only one version aka `v1`
+`LNMARKETS_API_VERSION` There is currently two versions, `v1` and `v2`. Use `v2` as `v1` will be deprecated soon.
 
 `LNMARKETS_API_HOSTNAME` is only used for debug
 
@@ -183,9 +183,13 @@ All you have to do now is to instanciate a `LNMarketsRest` object this way:
 
 After this, you'll be able to use all the documented `API` methods below.
 
-All these functions are wrappers for documented public endpoints from LN Markets API v1. See specification [here](https://docs.lnmarkets.com/api/v1/).
+All these functions are wrappers for documented public endpoints from LN Markets API v2. See specification [here](https://docs.lnmarkets.com/api/v2/).
 
 Be careful, all methods expect an object as parameter with the correct parameters in it.
+
+### Deprecation of API v1
+
+API `v1` will be deprecated soon, please use API `v2` instead. The futures trade identifier has been changed from `pid` to `id` in API `v2`. Please update your code accordingly.
 
 ### Examples
 
@@ -230,7 +234,6 @@ These methods are designed to fill the gaps if the API evolves in the future but
 - [`optionsGetConfiguration`](#optionsGetConfiguration)
 - [`optionsGetVolatility`](#optionsGetVolatility)
 
-
 #### futuresGetTicker
 
 Get the ticker of LN Markets
@@ -241,7 +244,7 @@ Example:
   await lnm.futuresGetTicker()
 ```
 
-[`GET /futures/ticker`](https://docs.lnmarkets.com/api/v1/#ticker) documentation for more details.
+[`GET /futures/ticker`](https://docs.lnmarkets.com/api/v2/#ticker) documentation for more details.
 
 #### futuresNewPosition
 
@@ -294,7 +297,7 @@ Example:
   })
 ```
 
-[`POST /futures`](https://docs.lnmarkets.com/api/v1/#create) documentation for more details.
+[`POST /futures`](https://docs.lnmarkets.com/api/v2/#create) documentation for more details.
 
 #### futuresGetPositions
 
@@ -329,7 +332,7 @@ Example:
   })
 ```
 
-[`GET /futures`](https://docs.lnmarkets.com/api/v1/#history) documentation for more details.
+[`GET /futures`](https://docs.lnmarkets.com/api/v2/#history) documentation for more details.
 
 #### futuresUpdatePosition
 
@@ -360,7 +363,7 @@ Example:
   })
 ```
 
-[`PUT /futures`](https://docs.lnmarkets.com/api/v1/#update) documentation for more details.
+[`PUT /futures`](https://docs.lnmarkets.com/api/v2/#update) documentation for more details.
 
 #### addMargin
 
@@ -384,7 +387,7 @@ Example:
   })
 ```
 
-[`POST /futures/add-margin`](https://docs.lnmarkets.com/api/v1/#add-margin) documentation for more details.
+[`POST /futures/add-margin`](https://docs.lnmarkets.com/api/v2/#add-margin) documentation for more details.
 
 #### futuresCancelAllPositions
 
@@ -400,7 +403,7 @@ Example:
   await lnm.futuresCancelAllPositions()
 ```
 
-[`DELETE /futures/all/cancel`](https://docs.lnmarkets.com/api/v1/#cancel-all) documentation for more details.
+[`DELETE /futures/all/cancel`](https://docs.lnmarkets.com/api/v2/#cancel-all) documentation for more details.
 
 #### futuresCancelPosition
 
@@ -420,7 +423,7 @@ Example:
   })
 ```
 
-[`POST /futures/cancel`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
+[`POST /futures/cancel`](https://docs.lnmarkets.com/api/v2/#cancel) documentation for more details.
 
 #### futuresCashinPosition
 
@@ -444,7 +447,7 @@ Example:
   })
 ```
 
-[`POST /futures/cash-in`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
+[`POST /futures/cash-in`](https://docs.lnmarkets.com/api/v2/#cancel) documentation for more details.
 
 #### futuresCloseAllPosisitions
 
@@ -460,7 +463,7 @@ Example:
   await lnm.futuresCloseAllPosisitions()
 ```
 
-[`DELETE /futures/all/close`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
+[`DELETE /futures/all/close`](https://docs.lnmarkets.com/api/v2/#cancel) documentation for more details.
 
 #### futuresClosePosition
 
@@ -480,7 +483,7 @@ Example:
   })
 ```
 
-[`DELETE /futures`](https://docs.lnmarkets.com/api/v1/#cancel) documentation for more details.
+[`DELETE /futures`](https://docs.lnmarkets.com/api/v2/#cancel) documentation for more details.
 
 #### futuresIndexHistory
 
@@ -509,11 +512,11 @@ Example:
   })
 ```
 
-[`GET /futures/history/index`](https://docs.lnmarkets.com/api/v1/#futures-index-history) documentation for more details.
+[`GET /futures/history/index`](https://docs.lnmarkets.com/api/v2/#futures-index-history) documentation for more details.
 
-#### futuresBidOfferHistory
+#### futuresPriceHistory
 
-Get bid and offer data over time.
+Get price history data.
 
 ```yaml
 from:
@@ -524,7 +527,8 @@ to:
   type: Integer
   required: false
 
-limit: Integer
+limit:
+  type: Integer
   required: false
   default: 100
 ```
@@ -532,12 +536,12 @@ limit: Integer
 Example:
 
 ```JS
-  await lnm.futuresBidOfferHistory({
+  await lnm.futuresPriceHistory({
     limit: 20
   })
 ```
 
-[`GET /futures/history/bid-offer`](https://docs.lnmarkets.com/api/v1/#futures-bid-and-offer-history) documentation for more details.
+[`GET /futures/history/price`](https://docs.lnmarkets.com/api/v2/#futures-price-history) documentation for more details.
 
 #### futuresFixingHistory
 
@@ -566,7 +570,7 @@ Example:
   })
 ```
 
-[`GET /futures/history/fixing`](https://docs.lnmarkets.com/api/v1/#futures-fixing-history) documentation for more details.
+[`GET /futures/history/fixing`](https://docs.lnmarkets.com/api/v2/#futures-fixing-history) documentation for more details.
 
 #### futuresCarryFeesHistory
 
@@ -595,7 +599,7 @@ Example:
   })
 ```
 
-[`GET /futures/carry-fees`](https://docs.lnmarkets.com/api/v1/#futures-carry-fees-history) documentation for more details.
+[`GET /futures/carry-fees`](https://docs.lnmarkets.com/api/v2/#futures-carry-fees-history) documentation for more details.
 
 #### deposit
 
@@ -619,7 +623,7 @@ Example:
   })
 ```
 
-[`POST /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
+[`POST /user/deposit`](https://docs.lnmarkets.com/api/v2/#deposit) documentation for more details.
 
 #### depositHistory
 
@@ -647,7 +651,7 @@ Example:
   })
 ```
 
-[`GET /user/deposit`](https://docs.lnmarkets.com/api/v1/#deposit) documentation for more details.
+[`GET /user/deposit`](https://docs.lnmarkets.com/api/v2/#deposit) documentation for more details.
 
 #### getAnnouncements
 
@@ -663,7 +667,7 @@ Example:
   await lnm.getAnnouncements()
 ```
 
-[`GET /app/announcemenets`](https://docs.lnmarkets.com/api/v1/#get-the-ln-markets-announcements) documentation for more details.
+[`GET /app/announcemenets`](https://docs.lnmarkets.com/api/v2/#get-the-ln-markets-announcements) documentation for more details.
 
 #### getLeaderboard
 
@@ -679,7 +683,7 @@ Example:
   await lnm.getLeaderboard()
 ```
 
-[`GET /futures/leaderboard`](https://docs.lnmarkets.com/api/v1/#leaderboard) documentation for more details.
+[`GET /futures/leaderboard`](https://docs.lnmarkets.com/api/v2/#leaderboard) documentation for more details.
 
 #### getUser
 
@@ -695,7 +699,7 @@ Example:
   await lnm.getUser()
 ```
 
-[`GET /user`](https://docs.lnmarkets.com/api/v1/#informations) documentation for more details.
+[`GET /user`](https://docs.lnmarkets.com/api/v2/#informations) documentation for more details.
 
 #### appConfiguration
 
@@ -711,7 +715,7 @@ Example:
   await lnm.appConfiguration()
 ```
 
-[`GET /app/configuration`](https://docs.lnmarkets.com/api/v1/#api-informations) documentation for more details.
+[`GET /app/configuration`](https://docs.lnmarkets.com/api/v2/#api-informations) documentation for more details.
 
 #### appNode
 
@@ -727,7 +731,7 @@ Example:
   await lnm.appNode()
 ```
 
-[`GET /app/node`](https://docs.lnmarkets.com/api/v1/#node-informations) documentation for more details.
+[`GET /app/node`](https://docs.lnmarkets.com/api/v2/#node-informations) documentation for more details.
 
 #### updateUser
 
@@ -765,7 +769,7 @@ Example:
   })
 ```
 
-[`PUT /user`](https://docs.lnmarkets.com/api/v1/#update-user) documentation for more details.
+[`PUT /user`](https://docs.lnmarkets.com/api/v2/#update-user) documentation for more details.
 
 #### withdraw
 
@@ -795,7 +799,7 @@ Example:
   })
 ```
 
-[`POST /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw-via-invoice) documentation for more details.
+[`POST /user/withdraw`](https://docs.lnmarkets.com/api/v2/#withdraw-via-invoice) documentation for more details.
 
 #### withdrawHistory
 
@@ -823,7 +827,7 @@ Example:
   })
 ```
 
-[`GET /user/withdraw`](https://docs.lnmarkets.com/api/v1/#withdraw) documentation for more details.
+[`GET /user/withdraw`](https://docs.lnmarkets.com/api/v2/#withdraw) documentation for more details.
 
 #### optionsGetPositions
 
@@ -858,7 +862,7 @@ Example:
   })
 ```
 
-[`GET /options/vanilla`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_GetVanillaTrades) documentation for more details.
+[`GET /options/vanilla`](https://docs.lnmarkets.com/api/v2/#operation/V1_Options_GetVanillaTrades) documentation for more details.
 
 #### optionsNewPosition
 
@@ -898,7 +902,7 @@ Example:
   })
 ```
 
-[`POST /options/vanilla`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_newTrade) documentation for more details.
+[`POST /options/vanilla`](https://docs.lnmarkets.com/api/v2/#operation/V1_Options_newTrade) documentation for more details.
 
 #### optionsGetConfiguration
 
@@ -914,7 +918,7 @@ Example:
   await lnm.optionsGetConfiguration()
 ```
 
-[`GET /options/instrument`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_Instrument) documentation for more details.
+[`GET /options/instrument`](https://docs.lnmarkets.com/api/v2/#operation/V1_Options_Instrument) documentation for more details.
 
 #### optionsGetVolatility
 
@@ -930,8 +934,7 @@ Example:
   await lnm.optionsGetVolatility()
 ```
 
-[`GET /options/volatility`](https://docs.lnmarkets.com/api/v1/#operation/V1_Options_getVolatility) documentation for more details.
-
+[`GET /options/volatility`](https://docs.lnmarkets.com/api/v2/#operation/V1_Options_getVolatility) documentation for more details.
 
 #### requestAPI
 
@@ -966,3 +969,33 @@ Example:
     credentials: true
   })
 ```
+
+### Deprecated `v1` methods
+
+#### futuresBidOfferHistory
+
+Get bid and offer data over time.
+
+```yaml
+from:
+  type: Integer
+  required: false
+
+to:
+  type: Integer
+  required: false
+
+limit: Integer
+  required: false
+  default: 100
+```
+
+Example:
+
+```JS
+  await lnm.futuresBidOfferHistory({
+    limit: 20
+  })
+```
+
+[`GET /futures/history/bid-offer`](https://docs.lnmarkets.com/api/v1/#futures-bid-and-offer-history) documentation for more details.

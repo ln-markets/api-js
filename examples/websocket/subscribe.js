@@ -9,7 +9,7 @@ const { LNMarketsWebsocket } = require('../../src/index.js')
     })
 
     await lnm.connect()
-    const params = ['futures/market/index', 'futures/market/bid-offer']
+    const params = ['futures/btc_usd/index', 'futures/btc_usd/lastPrice']
     await lnm.subscribe({ params })
   } catch (error) {
     console.error(error)
