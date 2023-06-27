@@ -200,7 +200,7 @@ import { createWebsocketClient } from '@ln-markets/api'
 const client = createWebsocketClient()
 ```
 
-#### Hearthbeat
+#### HearthBeat
 
 Default to `true` will send a ping every 5s to the server to keep the connection alive.
 
