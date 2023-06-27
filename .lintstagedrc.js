@@ -1,3 +1,4 @@
-module.exports = {
-  'src/**/*.{js,mjs}': ['prettier --write', 'eslint --fix'],
+export default {
+  '*': 'prettier --ignore-unknown --write',
+  '*.ts': 'eslint --fix',
 }

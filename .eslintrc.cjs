@@ -1,24 +1,36 @@
 module.exports = {
-  extends: [
-    'plugin:chai-friendly/recommended',
-    'plugin:prettier/recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:node/recommended',
-    'plugin:promise/recommended',
-  ],
-  ignorePatterns: ['examples/**'],
   env: {
+    es2022: true,
     node: true,
-    es2020: true,
-    mocha: true,
   },
-  globals: {
-    module: true,
-  },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    project: `${__dirname}/tsconfig.eslint.json`,
+    ecmaVersion: 'latest',
     sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:promise/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  ignorePatterns: ['dist/**'],
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: ['tsconfig.json'],
+      },
+      node: {
+        project: ['tsconfig.json'],
+      },
+    },
   },
   rules: {
     'no-console': 2,
@@ -26,16 +38,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     'import/no-unresolved': ['error', { commonjs: true }],
     'import/no-extraneous-dependencies': 'error',
-    'node/shebang': 'off',
-    'node/no-unsupported-features/es-syntax': 'off',
-    'node/no-missing-require': 'off',
     'no-global-assign': ['error', { exceptions: ['require'] }],
-    'node/no-unpublished-require': [
-      'error',
-      {
-        allowModules: ['redis-mock'],
-      },
-    ],
     'no-empty': ['error', { allowEmptyCatch: true }],
     camelcase: 'off',
     'prefer-destructuring': [

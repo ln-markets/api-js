@@ -1,21 +1,15 @@
 {
   "name": "@ln-markets/api",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "A set of wrappers to easily communicate with LN Markets API !",
-  "main": "src/index.js",
-  "module": "esm/index.mjs",
-  "files": [
-    "src/**/*.js",
-    "esm/**/*.mjs"
-  ],
-  "exports": {
-    ".": {
-      "import": "./esm/index.mjs",
-      "require": "./src/index.js"
-    }
-  },
-  "author": "BOTREL Kilian",
   "license": "MIT",
+  "keywords": [
+    "ln-markets",
+    "api",
+    "trading",
+    "sats",
+    "bitcoin"
+  ],
   "bugs": {
     "url": "https://github.com/ln-markets/api-js/issues"
   },
@@ -27,44 +21,50 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": [
-    "ln-markets",
-    "api",
-    "trading",
-    "sats",
-    "bitcoin"
-  ],
   "engines": {
-    "node": ">=14",
-    "pnpm": ">=6"
+    "node": ">=18.16.0",
+    "pnpm": ">=8.6"
   },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
-    "test": "mocha test/index.js --bail --exit",
-    "prepare": "husky install",
-    "eslint": "eslint --fix",
-    "prettier": "prettier --write",
-    "lint": "eslint --color './**/*.{js,mjs}'",
-    "format": "prettier --write './**/*.{js,mjs}'"
+    "lint": "eslint --color './**/*.{ts,js}'",
+    "format": "prettier --write './**/*.{ts,js}'",
+    "build": "tsc --build",
+    "type-check": "tsc --noEmit",
+    "test": "vitest --run"
   },
   "dependencies": {
-    "eventemitter3": "4.0.7",
-    "ws": "8.8.0"
+    "ws": "8.13.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.0.2",
-    "@commitlint/config-conventional": "17.0.2",
-    "chai": "4.3.6",
-    "dotenv": "16.0.1",
-    "eslint": "8.18.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-chai-friendly": "0.7.2",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-promise": "6.0.0",
-    "husky": "8.0.1",
-    "lint-staged": "13.0.3",
-    "mocha": "10.0.0",
-    "prettier": "2.7.1"
+    "@commitlint/cli": "17.6.6",
+    "@commitlint/config-conventional": "17.6.6",
+    "@types/node": "18.16.0",
+    "@types/ws": "8.5.5",
+    "@typescript-eslint/eslint-plugin": "5.60.1",
+    "@typescript-eslint/parser": "5.60.1",
+    "eslint": "8.43.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-promise": "6.1.1",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.2",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4",
+    "vitest": "0.32.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
