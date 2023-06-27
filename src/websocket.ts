@@ -84,7 +84,7 @@ export const createWebsocketClient = async (
       params,
     }
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<unknown>((resolve, reject) => {
       ws.send(JSON.stringify(payload), (error) => {
         if (error) {
           reject(error)
@@ -103,16 +103,20 @@ export const createWebsocketClient = async (
     })
   }
 
+  const publicPing = () => {
+    return send(`${version}/public/ping`, undefined) as Promise<string>
+  }
+
+  const publicChannels = () => {
+    return send(`${version}/public/channels`, undefined) as Promise<string[]>
+  }
+
   const publicSubscribe = (channels: string[]) => {
-    return send(`${version}/public/subscribe`, channels)
+    return send(`${version}/public/subscribe`, channels) as Promise<string[]>
   }
 
   const publicUnsubscribe = (channels: string[]) => {
-    return send(`${version}/public/unsubscribe`, channels)
-  }
-
-  const publicPing = () => {
-    return send(`${version}/public/ping`, undefined)
+    return send(`${version}/public/unsubscribe`, channels) as Promise<string[]>
   }
 
   return {
@@ -122,5 +126,6 @@ export const createWebsocketClient = async (
     publicSubscribe,
     publicUnsubscribe,
     publicPing,
+    publicChannels,
   }
 }
