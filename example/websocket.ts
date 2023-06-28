@@ -8,3 +8,7 @@ const channels = await client.publicChannels()
 console.log(channels)
 
 await client.publicSubscribe(['futures:btc_usd:last-price'])
+
+client.ws.on('message', (data) => {
+  console.log(data.toString())
+})
