@@ -3,7 +3,6 @@
 // imports
 import { createRestClient } from '../../src/rest'
 import { beforeAll, describe, it, expect } from 'vitest'
-import { randomBytes } from 'node:crypto'
 
 // persistence
 let lnmarkets: ReturnType<typeof createRestClient>
