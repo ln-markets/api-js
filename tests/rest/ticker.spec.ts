@@ -1,4 +1,4 @@
-/* ~~/vitest.config.ts */
+/* ~~/tests/rest/ticker.spec.ts */
 
 // imports
 import { createRestClient } from '../../src/rest'
