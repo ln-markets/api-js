@@ -15,8 +15,12 @@ beforeAll(() => {
 
 describe('Fetches price history', () => {
   it('Retrieves testnet fixing history containing fee_rate, id, price and time', async () => {
-    const fixingHistory: { fee_rate: number, id: string, price: number, time: number; }[] =
-      await lnmarkets.futuresFixingHistory({})
+    const fixingHistory: {
+      fee_rate: number
+      id: string
+      price: number
+      time: number
+    }[] = await lnmarkets.futuresFixingHistory({})
     for (const item of fixingHistory) {
       const { fee_rate, id, price, time } = item
       expect(fee_rate).toBeTruthy()

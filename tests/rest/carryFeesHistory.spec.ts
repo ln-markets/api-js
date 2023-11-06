@@ -15,10 +15,10 @@ beforeAll(() => {
 
 describe('Fetches carry fees history', () => {
   it('Retrieves testnet carryFees history', async () => {
-      await lnmarkets.futuresCarryFeesHistory({}).catch(err => {
-        // TODO: This is not a `requireAuth` endpoint tho?
-        expect(err.status).toBe(401)
-        expect(err.statusText).toBe('Unauthorized')
-      })
+    await lnmarkets.futuresCarryFeesHistory({}).catch((err) => {
+      // TODO: This is not a `requireAuth` endpoint tho?
+      expect(err.status).toBe(401)
+      expect(err.statusText).toBe('Unauthorized')
+    })
   })
 })
