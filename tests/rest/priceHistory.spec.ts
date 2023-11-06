@@ -15,7 +15,8 @@ beforeAll(() => {
 
 describe('Fetches price history', () => {
   it('Retrieves latest testnet price history containing time and value numeric pairs', async () => {
-    const priceHistory: { time: number;  value: number }[] = await lnmarkets.futuresPriceHistory({})
+    const priceHistory: { time: number; value: number }[] =
+      await lnmarkets.futuresPriceHistory({})
     for (const item of priceHistory) {
       const { time, value } = item
       expect(time).toBeTruthy()
