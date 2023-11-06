@@ -13,7 +13,7 @@ beforeAll(() => {
   lnmarkets = createRestClient({ network })
 })
 
-describe('Fetches price history', () => {
+describe('Fetches fixing history', () => {
   it('Retrieves testnet fixing history containing fee_rate, id, price and time', async () => {
     const fixingHistory: {
       fee_rate: number

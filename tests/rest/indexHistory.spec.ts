@@ -13,7 +13,7 @@ beforeAll(() => {
   lnmarkets = createRestClient({ network })
 })
 
-describe('Fetches price history', () => {
+describe('Fetches index history', () => {
   it('Retrieves latest testnet index history containing time and value numeric pairs', async () => {
     const indexHistory: { time: number; value: number }[] =
       await lnmarkets.futuresIndexHistory({})
