@@ -1,3 +1,10 @@
 node_modules
 .env
 dist
+
+# osx stores
+**/.DS_Store
+
+# ignore workspace settings
+.idea
+.vscode
