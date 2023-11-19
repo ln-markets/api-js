@@ -271,6 +271,10 @@ export const createRestClient = (options: RestOptions = {}) => {
     return request({ method: 'GET', path: '/options/instrument', data })
   }
 
+  const optionsMarket = () => {
+    return request({ method: 'GET', path: '/options/market' })
+  }
+
   const optionsNewTrade = (data: any) => {
     return request({
       method: 'POST',
@@ -339,6 +343,7 @@ export const createRestClient = (options: RestOptions = {}) => {
     userWithdrawHistory,
     optionsInstrument,
     optionsInstruments,
+    optionsMarket,
     optionsNewTrade,
     optionsGetTrades,
     optionsCloseTrade,
