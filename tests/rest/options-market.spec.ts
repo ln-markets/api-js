@@ -1,10 +1,6 @@
-/* ~~/tests/rest/optionsMarket.spec.ts */
-
-// imports
 import { createRestClient } from '../../src/rest'
 import { beforeAll, describe, it, expect } from 'vitest'
 
-// custom types
 type Limit = { min: number; max: number }
 type Market = {
   active: boolean
@@ -18,7 +14,6 @@ type Market = {
   }
 }
 
-// persistence
 let market: Market
 let lnmarkets: ReturnType<typeof createRestClient>
 let network: string

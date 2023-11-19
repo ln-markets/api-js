@@ -1,10 +1,6 @@
-/* ~~/tests/rest/optionsInstruments.spec.ts */
-
-// imports
 import { createRestClient } from '../../src/rest'
 import { beforeAll, describe, it, expect } from 'vitest'
 
-// persistence
 let instruments: string[]
 let lnmarkets: ReturnType<typeof createRestClient>
 let network: string
