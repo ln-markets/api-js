@@ -36,8 +36,8 @@
     "package.json"
   ],
   "scripts": {
-    "lint": "eslint --color './**/*.{ts,js}'",
-    "format": "prettier --write './**/*.{ts,js}'",
+    "lint": "eslint --color './**/*.ts'",
+    "format": "prettier --write './**/*.ts'",
     "build": "tsc --build",
     "type-check": "tsc --noEmit",
     "test": "exit 0",

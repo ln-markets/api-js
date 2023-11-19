@@ -1,8 +1,5 @@
-module.exports = {
-  env: {
-    es2022: true,
-    node: true,
-  },
+const typescript = {
+  files: ['*.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: `${__dirname}/tsconfig.eslint.json`,
@@ -11,16 +8,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   extends: [
-    'eslint:recommended',
-    'plugin:import/recommended',
-    'plugin:promise/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
-  ignorePatterns: ['dist/**'],
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts'],
     },
     'import/resolver': {
       typescript: {
@@ -32,8 +25,20 @@ module.exports = {
       },
     },
   },
+}
+
+module.exports = {
+  env: { es2022: true, node: true },
+  overrides: [typescript],
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:promise/recommended',
+    'prettier',
+  ],
+  plugins: ['import'],
   rules: {
-    'no-console': 2,
+    'no-console': 'error',
     'promise/no-callback-in-promise': 'off',
     'space-before-function-paren': 'off',
     'import/no-unresolved': ['error', { commonjs: true }],
@@ -41,22 +46,6 @@ module.exports = {
     'no-global-assign': ['error', { exceptions: ['require'] }],
     'no-empty': ['error', { allowEmptyCatch: true }],
     camelcase: 'off',
-    'prefer-destructuring': [
-      'error',
-      {
-        VariableDeclarator: {
-          array: false,
-          object: true,
-        },
-        AssignmentExpression: {
-          array: true,
-          object: false,
-        },
-      },
-      {
-        enforceForRenamedProperties: false,
-      },
-    ],
     'require-await': 'error',
     'no-return-await': 'error',
     'no-return-assign': 'error',
