@@ -154,7 +154,10 @@ import { createWebsocketClient } from '@ln-markets/api'
 // Need to be async
 const client = await createWebsocketClient()
 
-await client.subscribe(['futures:btc_usd:last-price', 'futures:btc_usd:index'])
+await client.publicSubscribe([
+  'futures:btc_usd:last-price',
+  'futures:btc_usd:index',
+])
 
 // Event on all response
 client.on('response', console.log)
