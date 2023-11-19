@@ -40,7 +40,7 @@
     "format": "prettier --write './**/*.{ts,js}'",
     "build": "tsc --build",
     "type-check": "tsc --noEmit",
-    "test": "vitest",
+    "test": "vitest --run",
     "prepublishOnly": "tsc",
     "release": "np --no-cleanup --no-tests --no-yarn"
   },
