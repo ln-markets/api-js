@@ -45,25 +45,25 @@
     "release": "np --no-cleanup --no-tests --no-yarn"
   },
   "dependencies": {
-    "ws": "8.13.0"
+    "ws": "8.14.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.6",
-    "@commitlint/config-conventional": "17.6.6",
-    "@types/node": "18.16.0",
-    "@types/ws": "8.5.5",
-    "@typescript-eslint/eslint-plugin": "5.60.1",
-    "@typescript-eslint/parser": "5.60.1",
-    "eslint": "8.43.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "2.27.5",
+    "@commitlint/cli": "18.4.2",
+    "@commitlint/config-conventional": "18.4.2",
+    "@types/node": "20.9.2",
+    "@types/ws": "8.5.9",
+    "@typescript-eslint/eslint-plugin": "6.11.0",
+    "@typescript-eslint/parser": "6.11.0",
+    "eslint": "8.54.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "2.29.0",
     "eslint-plugin-promise": "6.1.1",
     "husky": "8.0.3",
-    "lint-staged": "13.2.3",
-    "prettier": "2.8.8",
-    "typescript": "5.0.4",
-    "vitest": "0.32.2"
+    "lint-staged": "15.1.0",
+    "prettier": "3.1.0",
+    "typescript": "5.2.2",
+    "vitest": "0.34.6"
   },
   "commitlint": {
     "extends": [
