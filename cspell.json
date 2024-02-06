@@ -1,0 +1,16 @@
+{
+  "dictionaries": ["node", "npm", "en-gb"],
+  "ignorePaths": ["node_modules", "build", "dist", "pnpm-lock.yaml"],
+  "language": "en",
+  "words": [
+    "Afanassieff",
+    "Cashin",
+    "commitlint",
+    "Knip",
+    "lintstagedrc",
+    "lnmarkets",
+    "packagejson",
+    "sats",
+    "undici"
+  ]
+}

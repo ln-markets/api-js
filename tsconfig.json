@@ -1,30 +1,23 @@
 {
-  "include": ["src"],
-  "exclude": ["node_modules"],
+  "include": ["./**/*.ts"],
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "baseUrl": ".",
-    // Language and Environment
-    "target": "ESNext",
+    "target": "esnext",
+    "lib": ["esnext"],
     "module": "NodeNext",
-    "lib": ["es2023"],
-    // Module
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    // Emit
     "removeComments": true,
-    // Output format
     "noErrorTruncation": true,
-    // Interop constraints
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    // Type Checking
     "strict": true,
     "alwaysStrict": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noUncheckedIndexedAccess": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -35,8 +28,8 @@
     "noUnusedLocals": true,
     "allowUnreachableCode": true,
     "noFallthroughCasesInSwitch": true,
-    // Completeness
     "skipLibCheck": true,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
+    "allowJs": false
   }
 }

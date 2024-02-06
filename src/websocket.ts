@@ -3,8 +3,7 @@ import { randomBytes } from 'node:crypto'
 import { getHostname } from './utils.js'
 
 interface WebsocketClientOptions {
-  network?: string
-  version?: string
+  network?: 'mainnet' | 'testnet'
   heartbeat?: boolean
 }
 
@@ -22,7 +21,6 @@ export const createWebsocketClient = async (
 ) => {
   const {
     network = process.env.LNM_API_NETWORK || 'mainnet',
-    version = process.env.LNM_API_VERSION || 'v1',
     heartbeat = true,
   } = options
 
@@ -45,9 +43,10 @@ export const createWebsocketClient = async (
     })
   }
 
-  ws.on('message', (data: any) => {
+  ws.on('message', (data) => {
     try {
-      const response = JSON.parse(data) as WebsocketResponse
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      const response = JSON.parse(data.toString()) as WebsocketResponse
 
       if (response) {
         const { id, method, result, error, params } = response
@@ -104,19 +103,19 @@ export const createWebsocketClient = async (
   }
 
   const publicPing = () => {
-    return send(`${version}/public/ping`, undefined) as Promise<string>
+    return send(`v1/public/ping`, undefined) as Promise<string>
   }
 
   const publicChannels = () => {
-    return send(`${version}/public/channels`, undefined) as Promise<string[]>
+    return send(`v1/public/channels`, undefined) as Promise<string[]>
   }
 
   const publicSubscribe = (channels: string[]) => {
-    return send(`${version}/public/subscribe`, channels) as Promise<string[]>
+    return send(`v1/public/subscribe`, channels) as Promise<string[]>
   }
 
   const publicUnsubscribe = (channels: string[]) => {
-    return send(`${version}/public/unsubscribe`, channels) as Promise<string[]>
+    return send(`v1/public/unsubscribe`, channels) as Promise<string[]>
   }
 
   return {

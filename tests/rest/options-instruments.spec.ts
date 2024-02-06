@@ -31,7 +31,7 @@ describe('Fetches list of options instruments', () => {
 
 describe('Get instrument detail specified by name retrieved previously', () => {
   it('Retrieves testnet specified options instrument', async () => {
-    instruments = instruments.slice(0, 5) // only test first 5 instrumnet names
+    instruments = instruments.slice(0, 5) // only test first 5 instruments names
     for (const instrument_name of instruments) {
       const { volatility } = await lnmarkets.optionsInstrument({
         instrument_name,

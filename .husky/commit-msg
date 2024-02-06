@@ -1,4 +1,13 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env bash
+
+set -e
+
+result=$(pnpm cspell --show-context --no-progress --no-summary "$1" | sed 's/.* - / ➜ /' 2>&1 || true)
+if ! [ -z "$result" ]; then
+  echo "✗ Commit message didn't pass spellcheck:"
+  echo "$result"
+  exit 1
+fi
+
 
 pnpm commitlint --edit "$1"

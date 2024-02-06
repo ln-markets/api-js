@@ -1,15 +1,20 @@
-const typescript = {
-  files: ['*.ts'],
+module.exports = {
+  env: { node: true },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: `${__dirname}/tsconfig.eslint.json`,
+    tsconfigRootDir: __dirname,
+    project: `tsconfig.eslint.json`,
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
   extends: [
+    'eslint:recommended',
+    'plugin:promise/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
   ],
   settings: {
     'import/parsers': {
@@ -25,24 +30,10 @@ const typescript = {
       },
     },
   },
-}
-
-module.exports = {
-  env: { es2022: true, node: true },
-  overrides: [typescript],
-  extends: [
-    'eslint:recommended',
-    'plugin:import/recommended',
-    'plugin:promise/recommended',
-    'prettier',
-  ],
-  plugins: ['import'],
   rules: {
     'no-console': 'error',
     'promise/no-callback-in-promise': 'off',
     'space-before-function-paren': 'off',
-    'import/no-unresolved': ['error', { commonjs: true }],
-    'import/no-extraneous-dependencies': 'error',
     'no-global-assign': ['error', { exceptions: ['require'] }],
     'no-empty': ['error', { allowEmptyCatch: true }],
     camelcase: 'off',

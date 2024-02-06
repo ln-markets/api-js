@@ -1,6 +1,7 @@
 import { getHostname } from './utils.js'
 import { createHmac } from 'node:crypto'
 import { URL, URLSearchParams } from 'node:url'
+import { fetch } from 'undici'
 
 interface RequestOptions {
   method: string
@@ -13,10 +14,8 @@ interface RestOptions {
   key?: string
   secret?: string
   passphrase?: string
-  network?: string
-  version?: string
+  network?: 'mainnet' | 'testnet'
   headers?: Record<string, any>
-  hostname?: string
 }
 
 class HttpError extends Error {
@@ -37,11 +36,11 @@ export const createRestClient = (options: RestOptions = {}) => {
     key = process.env.LNM_API_KEY,
     secret = process.env.LNM_API_SECRET,
     network = process.env.LNM_API_NETWORK || 'mainnet',
-    version = process.env.LNM_API_VERSION || 'v2',
     passphrase = process.env.LNM_API_PASSPHRASE,
-    hostname = process.env.LNM_API_HOSTNAME || getHostname(network),
     headers = {},
   } = options
+
+  const hostname = process.env.LNM_API_HOSTNAME || getHostname(network)
 
   const request = async (options: RequestOptions) => {
     const { method, path, data, requireAuth } = options
@@ -64,7 +63,7 @@ export const createRestClient = (options: RestOptions = {}) => {
         : JSON.stringify(data)
 
       const signature = createHmac('sha256', secret)
-        .update(`${timestamp}${method}/${version}${path}${payload}`)
+        .update(`${timestamp}${method}/v2${path}${payload}`)
         .digest('base64')
 
       Object.assign(headers, {
@@ -75,7 +74,7 @@ export const createRestClient = (options: RestOptions = {}) => {
       })
     }
 
-    const url = new URL(`https://${hostname}/${version}${path}`)
+    const url = new URL(`https://${hostname}/v2${path}`)
 
     if (data && method.match(/^(GET|DELETE)$/)) {
       for (const [key, value] of Object.entries(data)) {
