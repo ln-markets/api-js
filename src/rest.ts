@@ -253,6 +253,15 @@ export const createRestClient = (options: RestOptions = {}) => {
     })
   }
 
+  const userWithdrawUsd = (data: any) => {
+    return request({
+      method: 'POST',
+      path: '/user/withdraw/usd',
+      requireAuth: true,
+      data,
+    })
+  }
+
   const userWithdrawHistory = (data: any) => {
     return request({
       method: 'GET',
@@ -339,6 +348,7 @@ export const createRestClient = (options: RestOptions = {}) => {
     userDeposit,
     userDepositHistory,
     userWithdraw,
+    userWithdrawUsd,
     userWithdrawHistory,
     optionsInstrument,
     optionsInstruments,
