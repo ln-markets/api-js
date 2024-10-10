@@ -6,7 +6,7 @@ import { fetch } from 'undici'
 interface RequestOptions {
   method: string
   path: string
-  data?: Record<string, any>
+  data?: Record<string, string>
   requireAuth?: boolean
 }
 
@@ -35,12 +35,12 @@ export const createRestClient = (options: RestOptions = {}) => {
   const {
     key = process.env.LNM_API_KEY,
     secret = process.env.LNM_API_SECRET,
-    network = process.env.LNM_API_NETWORK || 'mainnet',
+    network = process.env.LNM_API_NETWORK ?? 'mainnet',
     passphrase = process.env.LNM_API_PASSPHRASE,
     headers = {},
   } = options
 
-  const hostname = process.env.LNM_API_HOSTNAME || getHostname(network)
+  const hostname = process.env.LNM_API_HOSTNAME ?? getHostname(network)
 
   const request = async (options: RequestOptions) => {
     const { method, path, data, requireAuth } = options
@@ -58,7 +58,7 @@ export const createRestClient = (options: RestOptions = {}) => {
 
       const timestamp = Date.now()
 
-      const payload = method.match(/^(GET|DELETE)$/)
+      const payload = /^(GET|DELETE)$/.test(method)
         ? new URLSearchParams(data).toString()
         : JSON.stringify(data)
 
@@ -76,13 +76,13 @@ export const createRestClient = (options: RestOptions = {}) => {
 
     const url = new URL(`https://${hostname}/v2${path}`)
 
-    if (data && method.match(/^(GET|DELETE)$/)) {
+    if (data && /^(GET|DELETE)$/.test(method)) {
       for (const [key, value] of Object.entries(data)) {
         url.searchParams.append(key, value.toString())
       }
     }
 
-    const body = method.match(/^(POST|PUT)$/) ? JSON.stringify(data) : undefined
+    const body = /^(POST|PUT)$/.test(method) ? JSON.stringify(data) : undefined
 
     Object.assign(headers, {
       'Content-Type': 'application/json',

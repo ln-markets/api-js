@@ -20,17 +20,19 @@ export const createWebsocketClient = async (
   options: WebsocketClientOptions = {}
 ) => {
   const {
-    network = process.env.LNM_API_NETWORK || 'mainnet',
+    network = process.env.LNM_API_NETWORK ?? 'mainnet',
     heartbeat = true,
   } = options
 
   const ws = await new Promise<Websocket>((resolve, reject) => {
-    const hostname = process.env.LNM_API_HOSTNAME || getHostname(network)
+    const hostname = process.env.LNM_API_HOSTNAME ?? getHostname(network)
     const url = `wss://${hostname}`
 
     const ws = new Websocket(url)
     ws.once('error', reject)
-    ws.once('open', () => resolve(ws))
+    ws.once('open', () => {
+      resolve(ws)
+    })
   })
 
   if (heartbeat) {
@@ -48,18 +50,16 @@ export const createWebsocketClient = async (
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
       const response = JSON.parse(data.toString()) as WebsocketResponse
 
-      if (response) {
-        const { id, method, result, error, params } = response
-        ws.emit('response', response)
+      const { id, method, result, error, params } = response
+      ws.emit('response', response)
 
-        if (method === 'subscription' && params) {
-          const { channel, data } = params
-          ws.emit(channel, data)
-        } else if (id) {
-          ws.emit(id, result, error)
-        }
+      if (method === 'subscription' && params) {
+        const { channel, data } = params as { channel: string; data: unknown }
+        ws.emit(channel, data)
+      } else if (id) {
+        ws.emit(id, result, error)
       }
-    } catch (error) {
+    } catch {
       ws.emit('error', data)
     }
   })
@@ -70,7 +70,7 @@ export const createWebsocketClient = async (
 
   const send = (
     method: string,
-    params: Record<string, any> | string | number | undefined
+    params?: Record<string, any> | string | number
   ) => {
     if (ws.readyState !== 1) {
       throw new Error('Websocket Client is not connected')
@@ -84,17 +84,23 @@ export const createWebsocketClient = async (
     }
 
     return new Promise<unknown>((resolve, reject) => {
+      const done = (result: any, error: any) => {
+        if (error) {
+          if (typeof error === 'string') {
+            reject(new Error(error))
+          } else if (error instanceof Error) {
+            reject(error)
+          } else {
+            reject(new Error('Unknown error'))
+          }
+        } else {
+          resolve(result)
+        }
+      }
+
       ws.send(JSON.stringify(payload), (error) => {
         if (error) {
           reject(error)
-        }
-
-        const done = (result: any, error: any) => {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(result)
-          }
         }
 
         ws.once(payload.id, done)
@@ -103,11 +109,11 @@ export const createWebsocketClient = async (
   }
 
   const publicPing = () => {
-    return send(`v1/public/ping`, undefined) as Promise<string>
+    return send(`v1/public/ping`) as Promise<string>
   }
 
   const publicChannels = () => {
-    return send(`v1/public/channels`, undefined) as Promise<string[]>
+    return send(`v1/public/channels`) as Promise<string[]>
   }
 
   const publicSubscribe = (channels: string[]) => {
