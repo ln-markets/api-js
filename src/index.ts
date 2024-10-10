@@ -1,2 +1,2 @@
-export { createRestClient } from './rest.js'
-export { createWebsocketClient } from './websocket.js'
+export * from './rest.js'
+export * from './websocket.js'

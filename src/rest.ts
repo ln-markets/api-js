@@ -82,11 +82,13 @@ export const createRestClient = (options: RestOptions = {}) => {
       }
     }
 
-    const body = /^(POST|PUT)$/.test(method) ? JSON.stringify(data) : undefined
+    if (data && /^(POST|PUT)$/.test(method)) {
+      Object.assign(headers, {
+        'Content-Type': 'application/json',
+      })
+    }
 
-    Object.assign(headers, {
-      'Content-Type': 'application/json',
-    })
+    const body = /^(POST|PUT)$/.test(method) ? JSON.stringify(data) : undefined
 
     const response = await fetch(url, { method, body, mode: 'cors', headers })
 
