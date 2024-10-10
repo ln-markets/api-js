@@ -1,9 +1,8 @@
 node_modules
 .env
 dist
-
-# osx stores
 **/.DS_Store
+tsconfig.build.tsbuildinfo
 
 # ignore workspace settings
 .idea
